@@ -19,8 +19,8 @@ export default async function Home() {
         </small>
         <br />
         Hi there, I'm <strong>Gabriel</strong> aka <strong>gubriyeeel</strong>.
-        I'm a front-end engineer for <strong>Reelist8</strong>. I enjoy{" "}
-        <strong>psychology</strong> and playing with{" "}
+        I'm a front-end engineer for <strong>Reelist8</strong>. Beside coding, I
+        enjoy <strong>psychology</strong> and playing with{" "}
         <strong>artificial intelligence</strong>. I attend to{" "}
         <strong>tech events</strong> and I'm a{" "}
         <strong>free software enthusiast</strong>.

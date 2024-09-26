@@ -5,6 +5,7 @@ import { sortPosts } from "@/lib/utils";
 import PostRow from "@/components/post-row";
 import { getExperiences } from "@/lib/experiences";
 import Experience from "@/components/experience";
+import { AnimatedText } from "@/components/animated-name";
 
 /* eslint-disable react/no-unescaped-entities */
 export default async function Home() {
@@ -26,7 +27,9 @@ export default async function Home() {
         <strong>free software enthusiast</strong>.
       </p>
 
-      <h2>Experiences</h2>
+      <h2>
+        <AnimatedText name="Experiences" username="Employment Escapades" />
+      </h2>
 
       <div className="flex flex-col gap-4">
         {experiences.map((experience) => (
@@ -34,7 +37,9 @@ export default async function Home() {
         ))}
       </div>
 
-      <h2>Projects</h2>
+      <h2>
+        <AnimatedText name="Projects" username="Quests" />
+      </h2>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
         {/* Limits projects to show only 6 */}
@@ -43,7 +48,9 @@ export default async function Home() {
         ))}
       </div>
 
-      <h2>Blogs</h2>
+      <h2>
+        <AnimatedText name="Blogs" username="Blabber Logs" />
+      </h2>
 
       <div className="flex flex-col gap-4">
         {sortedPosts.map((post) => (

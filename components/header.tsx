@@ -3,6 +3,7 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { AnimatedText } from "@/components/animated-name";
 
 export default function Header() {
   const pathname = usePathname() as string;
@@ -29,7 +30,7 @@ export default function Header() {
       )}
 
       {pathname === "/" && (
-        <span className="text-sm text-muted-foreground">gubriyeeel</span>
+        <AnimatedText name="Gabriel Sufrir" username="gubriyeeel" />
       )}
 
       <Navbar />

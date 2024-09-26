@@ -1,4 +1,5 @@
 import { posts } from "#site/content";
+import { AnimatedText } from "@/components/animated-name";
 import PostItem from "@/components/post-item";
 import { sortPosts } from "@/lib/utils";
 
@@ -7,7 +8,9 @@ export default function BlogPage() {
 
   return (
     <main>
-      <h2>Blogs</h2>
+      <h2>
+        <AnimatedText name="Blogs" username="Blabber Logs" />
+      </h2>
 
       <div className="flex flex-col gap-12">
         {sortedPosts.map((post) => (

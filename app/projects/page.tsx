@@ -1,3 +1,4 @@
+import { AnimatedText } from "@/components/animated-name";
 import Project from "@/components/project";
 
 import { getProjects } from "@/lib/projects";
@@ -7,7 +8,9 @@ export default async function Projects() {
 
   return (
     <div>
-      <h2>Projects</h2>
+      <h2>
+        <AnimatedText name="Projects" username="Quests" />
+      </h2>
 
       <div className="grid grid-cols-1 gap-4">
         {projects.map((project) => (

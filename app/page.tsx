@@ -22,9 +22,9 @@ export default async function Home() {
         Hi there, I'm <strong>Gabriel</strong> aka <strong>gubriyeeel</strong>.
         I'm a front-end engineer for <strong>Reelist8</strong>. Beside coding, I
         enjoy <strong>psychology</strong> and trying out{" "}
-        <strong>new technologies</strong>. I attend to{" "}
-        <strong>tech events</strong> and I live in the{" "}
-        <strong>powershell</strong>.
+        <strong>new technologies</strong>. I live in the {" "}
+        <strong>powershell</strong> and I sometimes attend{" "}
+        <strong>tech events</strong>.
       </p>
 
       <h2>

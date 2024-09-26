@@ -21,10 +21,10 @@ export default async function Home() {
         <br />
         Hi there, I'm <strong>Gabriel</strong> aka <strong>gubriyeeel</strong>.
         I'm a front-end engineer for <strong>Reelist8</strong>. Beside coding, I
-        enjoy <strong>psychology</strong> and playing with{" "}
-        <strong>artificial intelligence</strong>. I attend to{" "}
-        <strong>tech events</strong> and I'm a{" "}
-        <strong>free software enthusiast</strong>.
+        enjoy <strong>psychology</strong> and trying out{" "}
+        <strong>new technologies</strong>. I attend to{" "}
+        <strong>tech events</strong> and I live in the{" "}
+        <strong>powershell</strong>.
       </p>
 
       <h2>

@@ -1,6 +1,6 @@
 # 👋 Hello, I'm [Gubriyeeel](https://www.linkedin.com/in/gubriyeeel)!
 
-I'm a passionate software engineer focused on full-stack development, building intuitive and scalable applications. I enjoy problem-solving and learning new technologies. I'm currently exploring exciting opportunities and constantly pushing my skills forward!
+I write code for a living.
 
 ---
 

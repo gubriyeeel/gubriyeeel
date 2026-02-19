@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import Project from "@/components/project";
 import { getProjects } from "@/lib/projects";
 import { posts } from "#site/content";
@@ -6,25 +7,75 @@ import PostRow from "@/components/post-row";
 import { getExperiences } from "@/lib/experiences";
 import Experience from "@/components/experience";
 import { AnimatedText } from "@/components/animated-name";
+import { siteConfig } from "@/lib/site";
+
+export const metadata: Metadata = {
+  title: "Frontend Engineer Portfolio",
+  description:
+    "Gabriel Sufrir is a senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    type: "website",
+    url: siteConfig.url,
+    title: "Gabriel Sufrir | Frontend Engineer Portfolio",
+    description:
+      "Senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Gabriel Sufrir | Frontend Engineer Portfolio",
+    description:
+      "Senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
+  },
+};
 
 /* eslint-disable react/no-unescaped-entities */
 export default async function Home() {
   const sortedPosts = sortPosts(posts);
   const projects = await getProjects();
   const experiences = await getExperiences();
+
+  const personJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "Person",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    sameAs: [siteConfig.links.linkedin],
+    jobTitle: "Senior Frontend Engineer",
+  };
+
+  const websiteJsonLd = {
+    "@context": "https://schema.org",
+    "@type": "WebSite",
+    name: siteConfig.name,
+    url: siteConfig.url,
+    description: siteConfig.description,
+  };
+
   return (
     <main>
-      <p className="my-6 text-primary-foreground/80">
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(personJsonLd) }}
+      />
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
+      />
+
+      <p className="my-6 font-light leading-relaxed text-primary-foreground/80">
         <small className="text-neutral-500">
-          /gŭb-riː-ˈjel/ — no meaning, it's from my actual name
+          /gub-ri-yeel/ - no meaning, it's from my actual name
         </small>
         <br />
-        Hi there, I'm <strong>Gabriel</strong> aka <strong>gubriyeeel</strong>.
-        I'm a front-end engineer for <strong>Reelist8</strong>. Beside coding, I
-        enjoy <strong>psychology</strong> and trying out{" "}
-        <strong>new technologies</strong>. I live in the {" "}
-        <strong>powershell</strong> and I sometimes attend{" "}
-        <strong>tech events</strong>.
+        Hi there, I'm <span className="font-medium">Gab</span>. I'm a senior
+        frontend engineer specialist. Beside coding, I enjoy{" "}
+        <span className="font-medium">psychology</span> and trying out{" "}
+        <span className="font-medium">new technologies</span>. I live in the{" "}
+        <span className="font-medium">terminal</span> and I sometimes attend{" "}
+        <span className="font-medium">tech events</span>.
       </p>
 
       <h2>
@@ -42,7 +93,6 @@ export default async function Home() {
       </h2>
 
       <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-        {/* Limits projects to show only 6 */}
         {projects.slice(0, 6).map((project) => (
           <Project key={project.repo} project={project} />
         ))}

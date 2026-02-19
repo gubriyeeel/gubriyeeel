@@ -5,21 +5,24 @@ type PostRowProps = {
   title: string;
   date: string;
   slug: string;
+  slugAsParams?: string;
   description?: string;
-}
+};
 
 export default function PostRow({
   title,
   date,
   slug,
+  slugAsParams,
   description,
 }: PostRowProps) {
-  console.log(slug);
+  const normalizedSlug = slugAsParams ?? slug.replace(/^blogs\//, "");
+  const postHref = `/blogs/${normalizedSlug}`;
 
   return (
     <article className="flex flex-col gap-2">
-      <Link href={`/${slug}`}>
-        <span className="text-lg font-bold text-neutral-300 underline decoration-neutral-600 underline-offset-4 hover:decoration-neutral-500">
+      <Link href={postHref}>
+        <span className="text-lg font-semibold text-neutral-300 underline decoration-neutral-600 underline-offset-4 hover:decoration-neutral-500">
           {title}
         </span>
       </Link>
@@ -28,7 +31,7 @@ export default function PostRow({
         <span>{description}</span>
 
         <button>
-          <span>→</span>
+          <span>-&gt;</span>
         </button>
       </div>
 

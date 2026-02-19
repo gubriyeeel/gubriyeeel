@@ -1,3 +1,4 @@
+/* eslint-disable react-hooks/static-components */
 import * as runtime from "react/jsx-runtime";
 import Image from "next/image";
 
@@ -18,5 +19,5 @@ type MdxProps = {
 export function MDXContent({ code }: MdxProps) {
   const Component = useMDXComponent(code)
 
-  return <Component componenets={components} />
+  return <Component components={components} />
 }

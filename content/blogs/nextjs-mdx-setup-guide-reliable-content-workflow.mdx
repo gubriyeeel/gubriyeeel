@@ -1,0 +1,51 @@
+---
+title: Next.js MDX Setup Guide for a Reliable Content Workflow
+description: A practical guide to setting up MDX in Next.js with schema validation, typed content, and a maintainable publishing flow.
+date: 2024-06-01
+published: true
+tags:
+  - nextjs
+  - mdx
+  - content workflow
+  - developer experience
+---
+
+My first MDX setup felt fragile.
+
+One small config change would break parsing, imports, or build output.
+
+After a few rebuilds, I realized the issue was not MDX itself. It was me trying to treat content like an afterthought.
+
+## The shift: content is part of the app
+
+When I started treating content as product data, everything got easier.
+
+I now keep a clear flow:
+
+- `content/` as the source of truth
+- a schema to validate frontmatter
+- generated typed output consumed by pages/components
+
+That gives me a clean contract between writing and rendering.
+
+## What improved immediately
+
+### 1) Fewer runtime surprises
+
+Schema validation catches bad frontmatter before production.
+
+### 2) Cleaner rendering
+
+MDX components stay focused on presentation, not data wrangling.
+
+### 3) Better writing momentum
+
+Because structure is stable, writing a new post feels like filling a template, not debugging infra.
+
+## The practical lesson
+
+MDX is worth it if you keep the system boring.
+
+If your content flow is predictable, you can spend your energy on ideas, stories, and examples instead of fighting tooling.
+
+You can see how I apply the same thinking in real product work on my [Projects page](/projects).

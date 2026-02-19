@@ -1,0 +1,55 @@
+---
+title: How to Ship Frontend Features Fast Without Technical Debt
+description: A practical frontend workflow for shipping features quickly with TypeScript, clear guardrails, and maintainable code.
+date: 2024-06-03
+published: true
+tags:
+  - frontend engineering
+  - technical debt
+  - typescript
+  - product development
+---
+
+Every project starts with excitement and ends with a deadline.
+
+The dangerous part is the middle, where speed starts to fight quality.
+
+Over time, I settled on a simple frontend workflow that helps me ship quickly without creating future pain.
+
+## Build the "ugly but true" version first
+
+I start with the minimum version that proves the idea works:
+
+- no polished styles
+- no abstractions
+- no "perfect" architecture
+
+If the feature does not solve a real user problem in this version, better styling will not save it.
+
+## Add guardrails before adding polish
+
+Once the feature works, I add only the guardrails that matter:
+
+- strict TypeScript types on inputs and outputs
+- basic loading/error states
+- one or two tests on the risky behavior
+
+This is where many bugs die early.
+
+## Refactor only after behavior is stable
+
+Refactoring too early is just guesswork.
+
+I only extract helpers, components, or utilities after seeing repeated patterns in real code. If I copy a pattern three times, I refactor it on the fourth.
+
+That rule keeps abstractions practical instead of theoretical.
+
+## My rule of thumb
+
+Speed is not "writing fast."
+
+Speed is reducing how often you need to rewrite the same thing.
+
+If your code is clear enough that Future You can understand it in 30 seconds, you are moving fast in the only way that compounds.
+
+If you want to discuss frontend architecture or product engineering, you can always reach me on the [Contact page](/contact).

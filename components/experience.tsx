@@ -7,8 +7,6 @@ type ExperienceProps = {
 export default function Experience({ experience }: ExperienceProps) {
   const { companyName, position, year, tech } = experience;
 
-  const techs = tech.map((t) => t.toLowerCase());
-
   return (
     <div className="flex w-full flex-col space-y-2">
       <div>
@@ -23,7 +21,7 @@ export default function Experience({ experience }: ExperienceProps) {
       </div>
 
       <div className="flex gap-2">
-        {techs.map((t) => (
+        {tech.map((t) => (
           <span className="text-xs" key={t}>
             {t}
           </span>

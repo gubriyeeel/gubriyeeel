@@ -24,7 +24,7 @@ export default function Header() {
             className="focus:outline-offset-6 underline decoration-neutral-600 underline-offset-4 transition-colors hover:decoration-neutral-500 focus:decoration-neutral-500"
             href={href}
           >
-            ← back
+            Back
           </Link>
         </div>
       )}

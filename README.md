@@ -1,51 +1,56 @@
-# 👋 Hello, I'm [Gubriyeeel](https://www.linkedin.com/in/gubriyeeel)!
+<div align="center">
 
-I write code for a living.
+![Typing SVG](https://readme-typing-svg.herokuapp.com?color=61DAFB&center=true&vCenter=true&height=45&width=600&lines=Hello,+I'm+Gab!+👋;Software+Engineer+@+Prosple;Frontend+Specialist+|+Full-Stack+Background;SaaS+Developer++at+Scale)
 
----
+</div>
 
-## 🌐 Socials:
-
-Connect with me on social media:
-
-[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gubriyeeel)
+I’m a **software engineer** specializing in high-performance frontend architectures. I focus on turning complex problems into seamless user experiences for millions of users.
 
 ---
 
-## 💻 Tech Stack:
+<div align="center">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/typescript/typescript-original.svg" height="45" alt="typescript logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/javascript/javascript-original.svg" height="45" alt="javascript logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/python/python-original.svg" height="45" alt="python logo" />
+  <img width="25" />
+  
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/react/react-original.svg" height="45" alt="react logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nextjs/nextjs-original.svg" height="45" alt="nextjs logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/tailwindcss/tailwindcss-original.svg" height="45" alt="tailwind logo" />
+  <img width="25" />
 
-Here are the technologies I work with:
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/nodejs/nodejs-original.svg" height="45" alt="nodejs logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/bun/bun-original.svg" height="45" alt="bun logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/django/django-plain.svg" height="45" alt="django logo" />
+</div>
 
-**Front-end Development**:
-- ![React](https://img.shields.io/badge/react-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-- ![Next.js](https://img.shields.io/badge/next.js-%23000000.svg?style=for-the-badge&logo=next.js&logoColor=white)
-- ![TailwindCSS](https://img.shields.io/badge/tailwindcss-%2338B2AC.svg?style=for-the-badge&logo=tailwind-css&logoColor=white)
-- ![ShadCN](https://img.shields.io/badge/ShadCN-%2320232a.svg?style=for-the-badge&logo=react&logoColor=%2361DAFB)
-
-**Back-end Development**:
-- ![NodeJS](https://img.shields.io/badge/node.js-6DA55F?style=for-the-badge&logo=node.js&logoColor=white)
-- ![Express.js](https://img.shields.io/badge/express.js-%23404d59.svg?style=for-the-badge&logo=express&logoColor=%2361DAFB)
-- ![Hono](https://img.shields.io/badge/Hono-%23000000.svg?style=for-the-badge&logo=honolab&logoColor=white)
-- ![Django](https://img.shields.io/badge/django-%23092e20.svg?style=for-the-badge&logo=django&logoColor=white)
-
-**Languages**:
-- ![TypeScript](https://img.shields.io/badge/typescript-%232F74C0.svg?style=for-the-badge&logo=typescript&logoColor=white)
-- ![JavaScript](https://img.shields.io/badge/javascript-%23323330.svg?style=for-the-badge&logo=javascript&logoColor=%23F7DF1E)
-
-**State Management**:
-- ![Zustand](https://img.shields.io/badge/Zustand-%2330385D.svg?style=for-the-badge&logo=zustand&logoColor=white)
-
-**Other Tools**:
-- ![Bun](https://img.shields.io/badge/Bun-%233F5F57.svg?style=for-the-badge&logo=bun&logoColor=white)
+<div align="center" style="margin-top: 15px;">
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/postgresql/postgresql-original.svg" height="45" alt="postgres logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/supabase/supabase-original.svg" height="45" alt="supabase logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="45" alt="git logo" />
+  <img width="10" />
+  <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" height="45" alt="figma logo" />
+</
 
 ---
 
-## 📈 GitHub Stats:
+<div align="center">
 
-![Gubriyeeel's GitHub stats](https://github-readme-stats.vercel.app/api?username=gubriyeeel&show_icons=true&count_private=true&hide=prs&hide_title=true)
+<br />
 
----
+[![LinkedIn](https://img.shields.io/badge/LinkedIn-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/gubriyeeel)
+[![Portfolio](https://img.shields.io/badge/Portfolio-%23000000.svg?style=for-the-badge&logo=vercel&logoColor=white)](https://www.linkedin.com/in/gubriyeeel)
 
-## 💬 Profile Views:
+<br />
 
-![](https://komarev.com/ghpvc/?username=gubriyeeel)
+![Visitor Count](https://komarev.com/ghpvc/?username=gubriyeeel&color=blueviolet&style=flat-square)
+
+</div>

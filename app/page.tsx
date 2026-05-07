@@ -10,7 +10,7 @@ import { AnimatedText } from "@/components/animated-name";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
-  title: "Frontend Engineer Portfolio",
+  title: "Gubriyel | Software Engineer",
   description:
     "Gabriel Sufrir is a senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
   alternates: {

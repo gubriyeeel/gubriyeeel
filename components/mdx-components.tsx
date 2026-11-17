@@ -3,21 +3,21 @@ import * as runtime from "react/jsx-runtime";
 import Image from "next/image";
 
 const useMDXComponent = (code: string) => {
-  const fn = new Function(code)
+  const fn = new Function(code);
 
-  return fn({...runtime}).default;
-}
+  return fn({ ...runtime }).default;
+};
 
 const components = {
-  Image
-}
+  Image,
+};
 
 type MdxProps = {
-  code: string
-}
+  code: string;
+};
 
 export function MDXContent({ code }: MdxProps) {
-  const Component = useMDXComponent(code)
+  const Component = useMDXComponent(code);
 
-  return <Component components={components} />
+  return <Component components={components} />;
 }

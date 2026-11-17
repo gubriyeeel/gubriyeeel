@@ -58,7 +58,10 @@ export default function ContactPage() {
           </span>
           <div className="min-w-0 flex-1">
             <p className="text-sm text-muted-foreground">Email</p>
-            <a href={siteConfig.links.email} className="block truncate font-medium hover:underline">
+            <a
+              href={siteConfig.links.email}
+              className="block truncate font-medium hover:underline"
+            >
               {email}
             </a>
           </div>
@@ -72,7 +75,7 @@ export default function ContactPage() {
               href={href}
               target="_blank"
               rel="noreferrer"
-              className="surface pressable enter group flex flex-col gap-6 p-5 hover:border-white/[0.12]"
+              className="surface spotlight pressable enter group flex flex-col gap-6 p-5 hover:border-white/[0.12]"
               style={{ "--i": 4 + i } as React.CSSProperties}
             >
               <div className="flex items-center justify-between">

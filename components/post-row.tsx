@@ -32,7 +32,9 @@ export default function PostRow({
       <div className="min-w-0 flex-1">
         <p className="font-medium tracking-tight">{title}</p>
         {showDescription && description ? (
-          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{description}</p>
+          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">
+            {description}
+          </p>
         ) : null}
         <p className="mt-1 text-sm text-muted-foreground/70">
           <time dateTime={date}>{formatDate(date)}</time>

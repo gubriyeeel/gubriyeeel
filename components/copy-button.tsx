@@ -24,7 +24,9 @@ export function CopyButton({ value, label }: { value: string; label: string }) {
       }}
       className={cn(
         "pressable relative grid size-11 shrink-0 place-items-center rounded-full",
-        copied ? "bg-positive/15 text-positive" : "bg-secondary text-foreground/80 hover:bg-accent",
+        copied
+          ? "bg-positive/15 text-positive"
+          : "bg-secondary text-foreground/80 hover:bg-accent",
       )}
     >
       <CopyIcon

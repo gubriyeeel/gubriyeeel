@@ -95,14 +95,23 @@ export default async function PostPage({ params }: PostPageProps) {
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <time dateTime={post.date} className="enter block text-sm text-muted-foreground">
+      <time
+        dateTime={post.date}
+        className="enter block text-sm text-muted-foreground"
+      >
         {formatDate(post.date)}
       </time>
-      <h1 className="enter mt-2 text-3xl sm:text-4xl" style={{ "--i": 1 } as React.CSSProperties}>
+      <h1
+        className="enter mt-2 text-3xl sm:text-4xl"
+        style={{ "--i": 1 } as React.CSSProperties}
+      >
         {post.title}
       </h1>
       {post.description ? (
-        <p className="enter mt-4 text-lg text-muted-foreground" style={{ "--i": 2 } as React.CSSProperties}>
+        <p
+          className="enter mt-4 text-lg text-muted-foreground"
+          style={{ "--i": 2 } as React.CSSProperties}
+        >
           {post.description}
         </p>
       ) : null}

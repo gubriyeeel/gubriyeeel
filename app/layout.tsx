@@ -2,6 +2,8 @@ import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header";
+import Footer from "@/components/footer";
+import { Spotlight } from "@/components/motion/spotlight";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
@@ -57,10 +59,24 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en" className={font.variable} suppressHydrationWarning>
-      <body className={cn("min-h-dvh bg-background font-sans text-foreground")}>
-        <div className="container mx-auto pb-16 pt-6">
-          <Header />
+      <head>
+        {/* Lets CSS hide scroll-reveal content only when JS can reveal it. */}
+        <script
+          dangerouslySetInnerHTML={{
+            __html: "document.documentElement.classList.add('js')",
+          }}
+        />
+      </head>
+      <body
+        id="top"
+        className={cn("min-h-dvh bg-background font-sans text-foreground")}
+      >
+        <div className="ambient" aria-hidden />
+        <Spotlight />
+        <Header />
+        <div className="container mx-auto pb-10">
           {children}
+          <Footer />
         </div>
       </body>
     </html>

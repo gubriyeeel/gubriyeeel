@@ -1,4 +1,10 @@
-export function AnimatedText({ name, username }: { name: string; username: string }) {
+export function AnimatedText({
+  name,
+  username,
+}: {
+  name: string;
+  username: string;
+}) {
   return (
     <span className="transition-element font-medium">
       <span className="sr-only">Gabriel Sufrir</span>

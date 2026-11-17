@@ -4,10 +4,12 @@ import { getProjects } from "@/lib/projects";
 import { posts } from "#site/content";
 import { sortPosts } from "@/lib/utils";
 import PostRow from "@/components/post-row";
+import { SectionTitle } from "@/components/section-title";
 import { getExperiences } from "@/lib/experiences";
-import { RouteCard } from "@/components/route-card";
-import { ExperiencePicker } from "@/components/experience-picker";
-import { StackRadar } from "@/components/stack-radar";
+import { IntroCard } from "@/components/intro-card";
+import { ExperienceList } from "@/components/experience-list";
+import { Stack } from "@/components/stack";
+import { Reveal } from "@/components/motion/reveal";
 import { CtaButton } from "@/components/cta-button";
 import { siteConfig } from "@/lib/site";
 
@@ -70,11 +72,17 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
 
-      <section className="mb-8 mt-12">
-        <p className="enter text-muted-foreground" style={{ "--i": 1 } as React.CSSProperties}>
+      <section className="mb-8 mt-10">
+        <p
+          className="enter text-muted-foreground"
+          style={{ "--i": 1 } as React.CSSProperties}
+        >
           Mabuhay
         </p>
-        <h1 className="enter mt-1" style={{ "--i": 1.5 } as React.CSSProperties}>
+        <h1
+          className="enter mt-1"
+          style={{ "--i": 1.5 } as React.CSSProperties}
+        >
           Hi, I'm Gab.
         </h1>
         <p
@@ -85,7 +93,8 @@ export default async function Home() {
             /gub-ri-yeel/ - no meaning, it's from my actual name
           </small>
           <br />
-          I'm a <span className="text-foreground">senior frontend engineer</span>.
+          I'm a{" "}
+          <span className="text-foreground">senior frontend engineer</span>.
           Beside coding, I enjoy{" "}
           <span className="text-foreground">psychology</span> and trying out{" "}
           <span className="text-foreground">new technologies</span>. I live in
@@ -94,46 +103,67 @@ export default async function Home() {
         </p>
       </section>
 
-      <div className="flex flex-col gap-4">
-        <RouteCard
-          from={{ code: "FIG", name: "Figma" }}
-          to={{ code: "PRD", name: "Production" }}
-          since={since}
-          roles={experiences.length}
-          projects={projects.length}
-        />
-        <ExperiencePicker experiences={experiences} />
-      </div>
-
-      <div className="mt-16">
-        <StackRadar experiences={experiences} />
-      </div>
-
-      <div className="mt-12 flex items-end justify-between">
-        <h2 className="m-0 text-3xl tracking-[-0.035em]">Projects</h2>
-        <a href="/projects" className="link-underline text-sm text-muted-foreground">
-          See all
-        </a>
-      </div>
-      <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
-        {projects.slice(0, 4).map((project, i) => (
-          <Project key={project.repo} project={project} index={i} />
-        ))}
-      </div>
-
-      <h2 className="mb-3 mt-14 text-3xl tracking-[-0.035em]">Writing</h2>
-      <div className="-mx-5 flex flex-col">
-        {sortedPosts.map((post, i) => (
-          <PostRow key={post.slug} {...post} index={i} />
-        ))}
-      </div>
-
-      <CtaButton
-        href="/contact"
-        label="Get in touch"
-        hint="open to work"
-        className="mt-14"
+      <IntroCard
+        role="Senior Frontend Engineer"
+        company={experiences[0].companyName}
+        stats={[
+          {
+            value: new Date().getFullYear() - since,
+            label: "Years shipping",
+            suffix: "+",
+          },
+          { value: experiences.length, label: "Roles" },
+          { value: projects.length, label: "Side projects" },
+        ]}
       />
+
+      <Reveal as="section" className="mt-16">
+        <SectionTitle eyebrow="Where I've been" title="Experience" />
+        <ExperienceList experiences={experiences} />
+      </Reveal>
+
+      <Reveal as="section" className="mt-16">
+        <SectionTitle
+          eyebrow="Dots show how many roles used it"
+          title="Stack"
+        />
+        <Stack experiences={experiences} />
+      </Reveal>
+
+      <Reveal as="section" className="mt-16">
+        <SectionTitle
+          eyebrow="Side quests"
+          title="Projects"
+          action={{ href: "/projects", label: "See all" }}
+        />
+        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+          {projects.slice(0, 4).map((project) => (
+            <Project key={project.repo} project={project} />
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal as="section" className="mt-16">
+        <SectionTitle
+          eyebrow="Blabber logs"
+          title="Writing"
+          action={{ href: "/blogs", label: "All posts" }}
+        />
+        <div className="-mx-5 flex flex-col">
+          {sortedPosts.slice(0, 3).map((post) => (
+            <PostRow key={post.slug} {...post} />
+          ))}
+        </div>
+      </Reveal>
+
+      <Reveal>
+        <CtaButton
+          href="/contact"
+          label="Get in touch"
+          hint="open to work"
+          className="mt-16"
+        />
+      </Reveal>
     </main>
   );
 }

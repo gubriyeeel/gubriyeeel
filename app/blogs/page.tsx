@@ -37,7 +37,7 @@ export default function BlogPage() {
         </h1>
       </section>
 
-      <div className="-mx-5 flex flex-col gap-1">
+      <div className="-mx-4 flex flex-col gap-1 sm:-mx-5">
         {sortedPosts.map((post, i) => (
           <PostRow key={post.slug} {...post} index={i + 2} showDescription />
         ))}

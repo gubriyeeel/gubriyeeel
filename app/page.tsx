@@ -114,7 +114,7 @@ export default async function Home() {
           title="Writing"
           action={{ href: "/blogs", label: "All posts" }}
         />
-        <div className="-mx-5 flex flex-col">
+        <div className="-mx-4 flex flex-col sm:-mx-5">
           {sortedPosts.slice(0, 3).map((post) => (
             <PostRow key={post.slug} {...post} />
           ))}

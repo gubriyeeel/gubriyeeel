@@ -26,7 +26,7 @@ export default function PostRow({
   return (
     <Link
       href={`/blogs/${normalizedSlug}`}
-      className="pressable enter group flex items-center gap-4 rounded-[1.5rem] px-5 py-4 hover:bg-card"
+      className="pressable enter group flex items-center gap-4 rounded-[1.5rem] px-4 py-4 hover:bg-card sm:px-5"
       style={{ "--i": index } as React.CSSProperties}
     >
       <div className="min-w-0 flex-1">

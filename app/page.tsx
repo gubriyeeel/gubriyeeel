@@ -6,9 +6,7 @@ import { sortPosts } from "@/lib/utils";
 import PostRow from "@/components/post-row";
 import { SectionTitle } from "@/components/section-title";
 import { getExperiences } from "@/lib/experiences";
-import { IntroCard } from "@/components/intro-card";
 import { ExperienceList } from "@/components/experience-list";
-import { Stack } from "@/components/stack";
 import { Reveal } from "@/components/motion/reveal";
 import { CtaButton } from "@/components/cta-button";
 import { siteConfig } from "@/lib/site";
@@ -40,9 +38,6 @@ export default async function Home() {
   const sortedPosts = sortPosts(posts.filter((post) => post.published));
   const projects = await getProjects();
   const experiences = await getExperiences();
-  const since = Math.min(
-    ...experiences.map((e) => new Date(e.year).getFullYear()),
-  );
 
   const personJsonLd = {
     "@context": "https://schema.org",
@@ -103,31 +98,9 @@ export default async function Home() {
         </p>
       </section>
 
-      <IntroCard
-        role="Senior Frontend Engineer"
-        company={experiences[0].companyName}
-        stats={[
-          {
-            value: new Date().getFullYear() - since,
-            label: "Years shipping",
-            suffix: "+",
-          },
-          { value: experiences.length, label: "Roles" },
-          { value: projects.length, label: "Side projects" },
-        ]}
-      />
-
-      <Reveal as="section" className="mt-16">
+      <Reveal as="section" className="mt-6">
         <SectionTitle eyebrow="Where I've been" title="Experience" />
         <ExperienceList experiences={experiences} />
-      </Reveal>
-
-      <Reveal as="section" className="mt-16">
-        <SectionTitle
-          eyebrow="Dots show how many roles used it"
-          title="Stack"
-        />
-        <Stack experiences={experiences} />
       </Reveal>
 
       <Reveal as="section" className="mt-16">

@@ -4,7 +4,7 @@
 
 </div>
 
-I’m a **software engineer** specializing in high-performance frontend architectures. I focus on turning complex problems into seamless user experiences for millions of users.
+I’m a **software engineer** specializing in high-performance frontend architectures. I focus on turning complex problems into user experiences for millions of users.
 
 ---
 

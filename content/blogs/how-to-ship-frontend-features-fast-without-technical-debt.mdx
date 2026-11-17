@@ -1,6 +1,6 @@
 ---
-title: How to Ship Frontend Features Fast Without Technical Debt
-description: A practical frontend workflow for shipping features quickly with TypeScript, clear guardrails, and maintainable code.
+title: How to Ship Frontend Features Fast Without Leaving a Mess
+description: Five concrete habits for moving quickly on frontend work, from validating data at the edges to building features you can delete cleanly.
 date: 2024-06-03
 published: true
 tags:
@@ -10,46 +10,84 @@ tags:
   - product development
 ---
 
-Every project starts with excitement and ends with a deadline.
+"Move fast" and "keep the codebase clean" sound like they pull in opposite directions. In my experience they mostly don't. What slows teams down isn't the time spent writing good code. It's the time spent rewriting, debugging, and being afraid to touch code that nobody fully understands.
 
-The dangerous part is the middle, where speed starts to fight quality.
+These are the habits that have actually made me faster, across startups and larger product teams.
 
-Over time, I settled on a simple frontend workflow that helps me ship quickly without creating future pain.
+## 1. Validate data at the edges, trust it inside
 
-## Build the "ugly but true" version first
+A lot of frontend bugs come from data that isn't the shape you thought it was: a field that's sometimes `null`, a number that arrives as a string, an array that's missing on old records.
 
-I start with the minimum version that proves the idea works:
+The fix is to check the shape once, where the data enters your app, and then trust the types everywhere else:
 
-- no polished styles
-- no abstractions
-- no "perfect" architecture
+```ts
+import { z } from "zod";
 
-If the feature does not solve a real user problem in this version, better styling will not save it.
+const Job = z.object({
+  id: z.string(),
+  title: z.string(),
+  salary: z.number().nullable(),
+  tags: z.array(z.string()).default([]),
+});
 
-## Add guardrails before adding polish
+export type Job = z.infer<typeof Job>;
 
-Once the feature works, I add only the guardrails that matter:
+export async function getJob(id: string): Promise<Job> {
+  const res = await fetch(`/api/jobs/${id}`);
+  return Job.parse(await res.json());
+}
+```
 
-- strict TypeScript types on inputs and outputs
-- basic loading/error states
-- one or two tests on the risky behavior
+Now components don't need defensive `?.` chains everywhere, and when the API changes you get one clear error at the boundary instead of a broken UI three screens away.
 
-This is where many bugs die early.
+## 2. Build the real flow first, styles last
 
-## Refactor only after behavior is stable
+I start with the plainest version that does the whole job end to end: real data, real mutations, real error handling, ugly UI.
 
-Refactoring too early is just guesswork.
+This surfaces the hard questions early. What happens when the request fails? What does the empty list look like? Is the data even available? Those answers change the design. Polished components built before that point often get thrown away.
 
-I only extract helpers, components, or utilities after seeing repeated patterns in real code. If I copy a pattern three times, I refactor it on the fourth.
+## 3. Ship small, behind a flag
 
-That rule keeps abstractions practical instead of theoretical.
+Big pull requests are slow to review, risky to merge, and painful to roll back. I'd rather merge five small ones behind a feature flag:
 
-## My rule of thumb
+- The data layer and types.
+- The basic UI, hidden.
+- Error and empty states.
+- The polish.
+- Removing the flag.
 
-Speed is not "writing fast."
+Each piece is easy to review and safe to deploy. The feature reaches production early, where real data can show you what you missed.
 
-Speed is reducing how often you need to rewrite the same thing.
+## 4. Copy twice, abstract on the third time
 
-If your code is clear enough that Future You can understand it in 30 seconds, you are moving fast in the only way that compounds.
+Early abstractions are guesses about how code will change. Usually they guess wrong, and then every new use case adds another prop or flag to a component that was supposed to be simple.
 
-If you want to discuss frontend architecture or product engineering, you can always reach me on the [Contact page](/contact).
+My rule: duplicating code once is fine. When I need the same thing a third time, I've seen enough real variations to know what the abstraction should actually be.
+
+## 5. Make features easy to delete
+
+Most features get changed or removed eventually. The easiest code to maintain is code you can take out cleanly.
+
+In practice that means:
+
+- Keep a feature's components, hooks and types in one folder.
+- Avoid reaching into other features' internals.
+- Name things after what they do, so you can search for everything related.
+
+If deleting a feature means deleting a folder and one route, you're in good shape. If it means hunting through shared utils for special cases, that's the debt to pay down.
+
+## Name the debt you take on
+
+Sometimes cutting a corner is the right call. When you do, write it down where the next person will see it:
+
+```ts
+// TODO(gab, JOB-412): Copy is hardcoded in English. Move to i18n before we add a second language.
+```
+
+An owner and a ticket turn a vague worry into a task. Unnamed shortcuts are the ones that turn into "nobody touch that file."
+
+## The real definition of fast
+
+Speed isn't how quickly you type. It's how rarely you have to go back. Clear boundaries, small changes and deletable features keep the second number low, and that's what compounds.
+
+If you want to talk frontend architecture or product engineering, you can reach me on the [Contact page](/contact).

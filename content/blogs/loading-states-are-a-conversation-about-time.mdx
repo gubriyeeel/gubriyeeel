@@ -1,0 +1,126 @@
+---
+title: Loading States Are a Conversation About Time
+description: How people actually experience waiting, and four frontend patterns that make your app feel faster without changing a single API call.
+date: 2026-09-08
+published: true
+tags:
+  - perceived performance
+  - ux psychology
+  - react
+---
+
+Nobody measures your app with a stopwatch. They measure it with how waiting *feels*.
+
+Two screens can take the same 1.2 seconds to load and leave completely different impressions. One flashes a spinner, jumps the layout twice, and lands. The other fades in a skeleton the exact shape of the content and settles without moving. The second one feels faster, and for the person using it, that feeling is the only measurement that counts.
+
+So I treat every loading state as a conversation about time. The UI is telling the user: here's what's happening, here's roughly how long, and here's what you'll get.
+
+## The three thresholds worth remembering
+
+Jakob Nielsen's response-time limits are decades old and still hold up:
+
+- **Around 0.1 seconds:** feels instant. No indicator needed. Showing one actually makes things feel slower.
+- **Around 1 second:** the user notices the delay but keeps their train of thought. A subtle indicator is enough.
+- **Around 10 seconds:** attention starts to drift. The user needs progress, an estimate, or something to do.
+
+Most loading bugs I see come from treating these three cases the same way, with one spinner for everything.
+
+## Pattern 1: Don't show a spinner for fast responses
+
+A spinner that appears for 80ms and disappears is worse than no spinner. It reads as a flicker, and a flicker reads as "something glitched."
+
+The fix is to delay the indicator, and once it's shown, keep it up long enough to be read:
+
+```tsx
+import { useEffect, useRef, useState } from "react";
+
+export function useDelayedFlag(active: boolean, delay = 300, minVisible = 500) {
+  const [visible, setVisible] = useState(false);
+  const shownAt = useRef(0);
+
+  useEffect(() => {
+    if (active && !visible) {
+      const t = setTimeout(() => {
+        shownAt.current = Date.now();
+        setVisible(true);
+      }, delay);
+      return () => clearTimeout(t);
+    }
+
+    if (!active && visible) {
+      const elapsed = Date.now() - shownAt.current;
+      const t = setTimeout(() => setVisible(false), Math.max(0, minVisible - elapsed));
+      return () => clearTimeout(t);
+    }
+  }, [active, visible, delay, minVisible]);
+
+  return visible;
+}
+```
+
+Fast requests never show the indicator. Slow ones show it for at least half a second, so it never blinks.
+
+## Pattern 2: Skeletons should be honest
+
+A skeleton works because it sets expectations. The user's brain starts parsing the layout before the data arrives. That only works if the skeleton matches what's coming.
+
+Rules I follow:
+
+- Same dimensions as the real content. If the skeleton is 120px tall and the content is 300px, you've just added a layout shift.
+- Same count when you know it. If the list usually has 4 items, show 4 placeholders, not 10.
+- Don't skeleton things that are already known. The page title, the navigation and the user's own name don't need to pretend to load.
+
+A dishonest skeleton is worse than a spinner, because it makes a promise and then breaks it.
+
+## Pattern 3: Be optimistic when failure is rare
+
+If an action succeeds 99% of the time, like a like, a checkbox or a rename, make the UI update immediately and reconcile with the server in the background.
+
+React 19 makes this a small amount of code:
+
+```tsx
+"use client";
+
+import { useOptimistic, useTransition } from "react";
+
+export function LikeButton({
+  liked,
+  onToggle,
+}: {
+  liked: boolean;
+  onToggle: (next: boolean) => Promise<void>;
+}) {
+  const [optimisticLiked, setOptimisticLiked] = useOptimistic(liked);
+  const [, startTransition] = useTransition();
+
+  return (
+    <button
+      aria-pressed={optimisticLiked}
+      onClick={() =>
+        startTransition(async () => {
+          setOptimisticLiked(!optimisticLiked);
+          await onToggle(!optimisticLiked);
+        })
+      }
+    >
+      {optimisticLiked ? "Liked" : "Like"}
+    </button>
+  );
+}
+```
+
+If the request fails and the parent's `liked` never changes, the optimistic value falls back on its own. Pair that with a short message so the rollback isn't silent.
+
+Don't be optimistic about payments, deletions or anything the user can't easily verify. Optimism is for actions where being briefly wrong is cheap.
+
+## Pattern 4: Long waits need a job for the user
+
+Past a few seconds, a spinner alone starts to feel like the app froze. Give people something:
+
+- **Real progress** when you have it, like bytes uploaded or steps completed.
+- **Stages** when you don't: "Uploading… Processing… Almost done." Even rough stages reduce how long the wait feels.
+- **Permission to leave**: "We'll email you when the export is ready." The best loading state for a 2-minute job is not making anyone watch it.
+
+## The takeaway
+
+Before reaching for a faster API, ask what the user sees while they wait. Delay the spinner, make skeletons match, be optimistic where it's safe, and give long waits a story. Users will call it fast, even if your metrics didn't move.

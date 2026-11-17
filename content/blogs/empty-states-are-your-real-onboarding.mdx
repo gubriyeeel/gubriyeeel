@@ -1,0 +1,110 @@
+---
+title: Empty States Are Your Real Onboarding
+description: The first thing a new user sees is usually nothing. Here's how to design the three kinds of empty states so that nothing turns into a next step.
+date: 2026-10-27
+published: true
+tags:
+  - ux psychology
+  - product engineering
+  - react
+---
+
+Teams spend weeks on onboarding tours, welcome modals and tooltips. Then a new user finishes the tour and lands on a screen that says "No items."
+
+For a new user, the empty state *is* the product. It's the screen they spend the most time on during their first session, and it's usually the least designed screen in the app.
+
+## Why empty screens are risky
+
+When people see a blank screen, they don't think "I should add something." They think "Is it broken? Did it load? Am I in the right place?" Uncertainty makes people stop. Stopped users leave.
+
+A good empty state answers three questions:
+
+1. **What is this place?**
+2. **Why is it empty?**
+3. **What do I do next?**
+
+The second question is the one most apps miss, because there's more than one reason a screen can be empty.
+
+## The three kinds of empty
+
+### 1. First use: "You haven't started yet"
+
+The user is new, so nothing exists. This is onboarding. Explain the value, then make the first action obvious.
+
+- Show what the screen will look like when it's full, like a faded example or a short illustration.
+- Give one primary action, not three.
+- Offer a shortcut if you can: a template, sample data, or an import.
+
+"Create your first project" with a big button beats "No projects found" every time.
+
+### 2. No results: "Nothing matched"
+
+The user searched or filtered, and nothing came back. They're not new. They're looking for something specific. Don't show them the onboarding message.
+
+- Repeat what they searched for, so they can spot a typo.
+- Show which filters are active, with a one-click way to clear them.
+- Suggest a broader search if you can.
+
+### 3. Cleared: "You're done"
+
+The user finished everything, like an empty inbox or a completed task list. This is a *good* moment, so treat it like one. A short, positive message works. Don't push them to create more work.
+
+## Make the state explicit in code
+
+Most bugs here come from one `if (items.length === 0)` check that shows the same message for all three cases. Make the reason a value:
+
+```tsx
+type EmptyReason = "first-use" | "no-results" | "cleared";
+
+function getEmptyReason({
+  totalCount,
+  query,
+  activeFilters,
+}: {
+  totalCount: number;
+  query: string;
+  activeFilters: number;
+}): EmptyReason {
+  if (query || activeFilters > 0) return "no-results";
+  if (totalCount === 0) return "first-use";
+  return "cleared";
+}
+```
+
+Then each case gets its own copy and its own action:
+
+```tsx
+function TasksEmpty({ reason, query, onClearFilters, onCreate }: Props) {
+  switch (reason) {
+    case "first-use":
+      return (
+        <Empty
+          title="Plan your first task"
+          body="Tasks you add here show up on your calendar and in your daily summary."
+          action={<Button onClick={onCreate}>Add a task</Button>}
+        />
+      );
+    case "no-results":
+      return (
+        <Empty
+          title={`No tasks match "${query}"`}
+          body="Check the spelling, or clear your filters to see everything."
+          action={<Button variant="ghost" onClick={onClearFilters}>Clear filters</Button>}
+        />
+      );
+    case "cleared":
+      return <Empty title="All done for today" body="Nice. Nothing left on your list." />;
+  }
+}
+```
+
+This also makes the states easy to test. You can check that each reason renders the right message without seeding a database.
+
+## Don't forget the other "empty" screens
+
+- **Errors aren't empty states.** If the request failed, say so and offer a retry. Showing "No items" when the API is down tells the user their data is gone.
+- **Loading isn't empty either.** Showing "No items" for half a second before the data arrives makes people's stomachs drop. Show a skeleton until you actually know the list is empty.
+
+## The takeaway
+
+Search your codebase for `length === 0`. Every match is a screen that a new user will probably see. Give each one a reason, a message, and a next step.

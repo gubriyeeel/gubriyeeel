@@ -1,51 +1,168 @@
 ---
-title: Next.js MDX Setup Guide for a Reliable Content Workflow
-description: A practical guide to setting up MDX in Next.js with schema validation, typed content, and a maintainable publishing flow.
+title: "Next.js + MDX with Velite: A Typed, Boring, Reliable Blog Setup"
+description: The exact setup behind this blog. Velite validates every post at build time, generates typed data, and keeps MDX rendering to a few lines.
 date: 2024-06-01
 published: true
 tags:
   - nextjs
   - mdx
-  - content workflow
+  - velite
   - developer experience
 ---
 
-My first MDX setup felt fragile.
+My first MDX setup was fragile. A small config change would break parsing, a typo in frontmatter would surface as a runtime crash, and I never quite trusted that a post would render until I opened it in the browser.
 
-One small config change would break parsing, imports, or build output.
+The problem wasn't MDX. It was treating content as an afterthought instead of as data. This is the setup that fixed it, and it's what runs this blog.
 
-After a few rebuilds, I realized the issue was not MDX itself. It was me trying to treat content like an afterthought.
+## The idea: content is data with a schema
 
-## The shift: content is part of the app
+The flow has three parts:
 
-When I started treating content as product data, everything got easier.
+1. **`content/`** holds MDX files. That's the source of truth.
+2. **[Velite](https://velite.js.org)** reads them, validates the frontmatter against a schema, compiles the MDX, and writes typed output to `.velite/`.
+3. **Pages import that output** like any other module, with full types.
 
-I now keep a clear flow:
+If a post has a bad date or a missing title, the build fails with a clear message. Nothing broken reaches production.
 
-- `content/` as the source of truth
-- a schema to validate frontmatter
-- generated typed output consumed by pages/components
+## The Velite config
 
-That gives me a clean contract between writing and rendering.
+```ts
+// velite.config.ts
+import { defineConfig, defineCollection, s } from "velite";
 
-## What improved immediately
+const posts = defineCollection({
+  name: "Post",
+  pattern: "blogs/*.mdx",
+  schema: s
+    .object({
+      slug: s.path(),
+      title: s.string().max(99),
+      description: s.string().max(999).optional(),
+      date: s.isodate(),
+      published: s.boolean().default(true),
+      tags: s.array(s.string()).optional(),
+      body: s.mdx(),
+    })
+    .transform((data) => ({
+      ...data,
+      slugAsParams: data.slug.split("/").slice(1).join("/"),
+    })),
+});
 
-### 1) Fewer runtime surprises
+export default defineConfig({
+  root: "content",
+  output: {
+    data: ".velite",
+    assets: "public/static",
+    base: "/static/",
+    name: "[name]-[hash:6].[ext]",
+    clean: true,
+  },
+  collections: { posts },
+});
+```
 
-Schema validation catches bad frontmatter before production.
+A few things doing real work here:
 
-### 2) Cleaner rendering
+- `s.path()` derives the slug from the file path, so there's no slug to keep in sync by hand.
+- `s.isodate()` rejects dates that aren't valid, which catches the classic `2024-13-01` typo.
+- `published` defaults to `true`, and setting it to `false` keeps drafts out of the build.
+- `s.mdx()` compiles the body at build time, so the page only has to run the compiled code.
 
-MDX components stay focused on presentation, not data wrangling.
+## Wiring it into Next.js
 
-### 3) Better writing momentum
+Add a path alias so the generated output imports cleanly:
 
-Because structure is stable, writing a new post feels like filling a template, not debugging infra.
+```json
+// tsconfig.json
+{
+  "compilerOptions": {
+    "paths": {
+      "#site/content": ["./.velite"]
+    }
+  }
+}
+```
 
-## The practical lesson
+Then run Velite before Next in both scripts:
 
-MDX is worth it if you keep the system boring.
+```json
+// package.json
+{
+  "scripts": {
+    "dev": "concurrently \"velite dev --silent\" \"next dev --turbopack\"",
+    "build": "velite build --clean && next build --turbopack"
+  }
+}
+```
 
-If your content flow is predictable, you can spend your energy on ideas, stories, and examples instead of fighting tooling.
+In dev, Velite watches `content/` and rebuilds as you write. In CI, make sure you run the full `build` script, not just `next build`. Otherwise `.velite` won't exist and the import will fail.
 
-You can see how I apply the same thinking in real product work on my [Projects page](/projects).
+Add `.velite` to `.gitignore`. It's generated output.
+
+## Rendering MDX
+
+Since Velite already compiled the MDX to a function body, rendering is short:
+
+```tsx
+// components/mdx-components.tsx
+import * as runtime from "react/jsx-runtime";
+import Image from "next/image";
+
+const components = { Image };
+
+function useMDXComponent(code: string) {
+  const fn = new Function(code);
+  return fn({ ...runtime }).default;
+}
+
+export function MDXContent({ code }: { code: string }) {
+  const Component = useMDXComponent(code);
+  return <Component components={components} />;
+}
+```
+
+Anything in `components` can be used inside posts, so custom callouts or demos are one import away.
+
+## Static pages from typed data
+
+The post page looks up the slug and pre-renders every post at build time:
+
+```tsx
+// app/blogs/[...slug]/page.tsx
+import { posts } from "#site/content";
+import { MDXContent } from "@/components/mdx-components";
+import { notFound } from "next/navigation";
+
+export function generateStaticParams() {
+  return posts.map((post) => ({ slug: post.slugAsParams.split("/") }));
+}
+
+export default async function PostPage({
+  params,
+}: {
+  params: Promise<{ slug: string[] }>;
+}) {
+  const { slug } = await params;
+  const post = posts.find((p) => p.slugAsParams === slug.join("/"));
+
+  if (!post || !post.published) notFound();
+
+  return (
+    <article>
+      <h1>{post.title}</h1>
+      <MDXContent code={post.body} />
+    </article>
+  );
+}
+```
+
+`post.title`, `post.date` and `post.tags` are all typed from the schema. Rename a field in the config and TypeScript shows you every place that needs updating.
+
+The same typed `posts` array drives the blog index, the sitemap and the article's structured data, so there's one source for all of them.
+
+## Why "boring" is the goal
+
+With this in place, writing a post is just writing. Create a file, fill in four lines of frontmatter, and the build either accepts it or tells you exactly what's wrong. That predictability is what keeps a blog alive. The less you fight the tooling, the more you write.
+
+You can see how I apply the same thinking to product work on my [Projects page](/projects).

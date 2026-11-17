@@ -1,0 +1,95 @@
+---
+title: Why Users Misclick, and How to Design Against It
+description: Misclicks are rarely user error. Target size, layout shift and button placement cause most of them, and each one has a frontend fix.
+date: 2026-09-29
+published: true
+tags:
+  - ux psychology
+  - accessibility
+  - css
+---
+
+When a user taps the wrong thing, the bug report says "user error." It almost never is.
+
+People don't misclick at random. They misclick because a target was too small, because something moved under their finger, or because two actions with very different consequences were sitting next to each other. Those are all frontend decisions, so they're all frontend bugs.
+
+## Cause 1: Targets that are too small
+
+Fitts's law says the time it takes to hit a target depends on how far away it is and how big it is. Smaller and farther means slower, and more misses.
+
+On a phone the problem is worse. A fingertip covers far more screen than a mouse pointer, and people tap while walking, holding coffee, or using one thumb.
+
+Some reference numbers:
+
+- **WCAG 2.2 (2.5.8, level AA):** interactive targets at least **24×24 CSS pixels**, or with enough spacing around them.
+- **WCAG 2.5.5 (AAA)**, Apple and Material guidance: closer to **44–48px**.
+
+The good news is you don't have to make the icon bigger. You can make the *hit area* bigger:
+
+```css
+.icon-button {
+  position: relative;
+}
+
+/* Invisible padding that still receives taps */
+.icon-button::after {
+  content: "";
+  position: absolute;
+  inset: -10px;
+}
+
+/* Bigger targets only where fingers are the input */
+@media (pointer: coarse) {
+  .icon-button {
+    min-width: 44px;
+    min-height: 44px;
+  }
+}
+```
+
+Watch for overlapping hit areas when icons sit close together. If two expanded targets overlap, you've moved the problem instead of fixing it.
+
+## Cause 2: Content that moves under the finger
+
+This is the most frustrating misclick there is. You go to tap "Read more," an ad or image loads above it, everything shifts down, and you tap something else.
+
+Google measures this as Cumulative Layout Shift (CLS), and a "good" score is 0.1 or less. But don't fix it for the metric. Fix it because it makes people tap things they didn't mean to.
+
+The fixes are boring and effective:
+
+- **Give media dimensions.** Set `width` and `height` on images and video, or use `aspect-ratio`, so the browser reserves space before the file arrives.
+- **Reserve space for late content.** Banners, embeds and "You might also like" sections get a `min-height` that matches their loaded size.
+- **Skeletons the same size as content.** A skeleton that's shorter than the real thing is a layout shift with extra steps.
+- **Insert new content below the user, not above.** If new items arrive in a feed, show a "3 new posts" pill instead of pushing everything down.
+
+```tsx
+// Reserve the slot before the data exists
+<div className="min-h-[96px]">
+  {banner ? <Banner {...banner} /> : null}
+</div>
+```
+
+## Cause 3: Dangerous neighbors
+
+If "Save" and "Delete" are the same size, same color, and 8px apart, someone will eventually hit the wrong one. Muscle memory does the rest.
+
+- **Separate destructive actions physically.** Put them in a different area, or behind a menu.
+- **Make them look different.** The primary action should be visually obvious. The destructive one should be quieter until it's needed.
+- **Keep positions stable.** If "Confirm" is on the right in one dialog and on the left in another, you're training people to misclick.
+
+And when a destructive action does happen by accident, make it reversible. I wrote about that in [Undo Beats "Are You Sure?"](/blogs/undo-beats-are-you-sure).
+
+## Cause 4: Things that look clickable but aren't (and the reverse)
+
+People click on what *looks* interactive. Underlined text that isn't a link, cards that look tappable but only have a tiny link inside them, and icons with no visible affordance all cause failed clicks. A failed click feels exactly like a misclick to the user.
+
+If a whole card looks clickable, make the whole card clickable. If something isn't interactive, don't style it like it is.
+
+## A quick checklist
+
+- Can every target be hit comfortably with a thumb?
+- Does anything move after the first paint?
+- Are destructive actions separated from common ones?
+- Does everything that looks clickable respond to a click?
+
+Run through it on a real phone, with one hand. You'll find something.

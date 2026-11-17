@@ -1,0 +1,111 @@
+---
+title: Form Validation That Doesn't Feel Like Scolding
+description: When to show errors, how to word them, and how to wire them up accessibly, so your forms guide people instead of telling them off.
+date: 2026-11-17
+published: true
+tags:
+  - ux psychology
+  - forms
+  - accessibility
+  - react
+---
+
+You type the first letter of your email address and the field turns red. "Invalid email." You haven't finished typing yet.
+
+That's not validation. That's being interrupted mid-sentence.
+
+Forms are where users spend effort, and effort makes people sensitive. An error at the wrong moment, or worded the wrong way, feels like being told off. Good validation is mostly about timing and tone.
+
+## Timing: reward early, punish late
+
+The pattern I use everywhere:
+
+- **Don't show an error while someone is still typing** a field for the first time. Wait until they leave it (on blur) or submit.
+- **Once an error is showing, clear it the moment it's fixed**, on every keystroke. Don't make people leave the field to find out they got it right.
+
+In other words, be slow to complain and quick to forgive. That asymmetry matches how people feel about it.
+
+```tsx
+"use client";
+
+import { useState } from "react";
+
+function validateEmail(value: string) {
+  if (!value) return "Enter your email address.";
+  if (!/^\S+@\S+\.\S+$/.test(value)) return "Enter an email like name@example.com.";
+  return null;
+}
+
+export function EmailField() {
+  const [value, setValue] = useState("");
+  const [touched, setTouched] = useState(false);
+
+  const error = validateEmail(value);
+  const showError = touched && error;
+
+  return (
+    <div>
+      <label htmlFor="email">Email</label>
+      <input
+        id="email"
+        type="email"
+        autoComplete="email"
+        value={value}
+        onChange={(e) => setValue(e.target.value)}
+        onBlur={() => setTouched(true)}
+        aria-invalid={showError ? true : undefined}
+        aria-describedby={showError ? "email-error" : undefined}
+      />
+      {showError ? (
+        <p id="email-error" role="alert">
+          {error}
+        </p>
+      ) : null}
+    </div>
+  );
+}
+```
+
+Because `error` is recalculated on every render, it disappears the moment the value becomes valid. `touched` only controls when it's allowed to appear for the first time.
+
+On submit, mark every field as touched and move focus to the first field with an error. Don't leave the user scrolling around for what went wrong.
+
+## Tone: say what to do, not what they did wrong
+
+Compare:
+
+- "Invalid input." → "Enter a date like 31/12/2026."
+- "Password does not meet requirements." → "Use at least 12 characters."
+- "Error: field required." → "Enter your company name."
+
+The better versions have the same structure: **tell them what to do next**, in plain words, with an example if the format is tricky. They describe the fix, not the failure.
+
+A few more rules:
+
+- **Don't blame.** "You entered an invalid…" puts the fault on the person. Just describe what's needed.
+- **No codes or jargon.** Users don't know what "422" or "regex mismatch" means.
+- **Show requirements before, not after.** If a password needs 12 characters, say so under the field before anyone types. An error message shouldn't be the first place someone learns the rules.
+
+## Accept more, reject less
+
+The best error message is the one that never appears. Many validation errors are the form being picky:
+
+- Phone numbers with spaces, dashes or brackets? Strip them.
+- Leading or trailing whitespace in an email? Trim it.
+- Card numbers in groups of four? Accept the spaces.
+- Dates? Use a format people actually write, or a proper date input.
+
+Every rule you remove is an error nobody has to read.
+
+## Accessibility is part of the timing
+
+Screen reader users need the same information at the same moment:
+
+- `aria-invalid` tells assistive tech the field has a problem.
+- `aria-describedby` connects the error text to the field, so it's read when the field gets focus.
+- `role="alert"` announces the error when it appears. Use it on blur or submit errors, not on every keystroke, or you'll flood the user with announcements.
+- Never rely on red alone. Pair color with text, and ideally an icon.
+
+## The takeaway
+
+Validation is a conversation, and the rules are the same as any good conversation: don't interrupt, don't blame, and when someone fixes their mistake, notice right away.

@@ -1,0 +1,86 @@
+---
+title: Undo Beats "Are You Sure?"
+description: Confirmation dialogs train people to click through them. Undo respects how people actually act, and it's not hard to build.
+date: 2026-10-13
+published: true
+tags:
+  - ux psychology
+  - react
+  - interaction design
+---
+
+"Are you sure you want to delete this?"
+
+Yes. Obviously. I clicked delete.
+
+Confirmation dialogs feel like a safety net, but they mostly protect the developer from blame, not the user from mistakes. Here's why, and what to build instead.
+
+## Why confirmation dialogs stop working
+
+The first time someone sees a confirmation dialog, they read it. By the tenth time, they don't. They've learned that the dialog always appears and the answer is always "yes," so clicking "Delete" becomes a two-click action done on autopilot.
+
+This is habituation. Our brains filter out things that are repetitive and predictable. A dialog that shows up for every action stops carrying information, and the one time it matters, it gets clicked through like all the others.
+
+There's a second problem: people make mistakes *before* the dialog, not at it. They pick the wrong item, or they realize a few seconds later that they needed that file. A dialog only asks about intent at the moment of the click. It can't help with "oh no, wait" five seconds later.
+
+## Undo matches how people actually work
+
+Undo lets people act at full speed and fix mistakes when they notice them. That's how we work everywhere else: we type, then we backspace.
+
+Gmail's "Undo send" is the classic example. The email isn't actually sent when you click Send. It waits a few seconds, giving you a window to take it back.
+
+You can use the same idea in your own UI.
+
+## Building undo: delay the commit
+
+The simplest version hides the item immediately, waits, and only then calls the API:
+
+```tsx
+function deleteWithUndo(item: Item) {
+  hideLocally(item.id);
+
+  const timer = setTimeout(() => {
+    api.deleteItem(item.id).catch(() => {
+      restoreLocally(item.id);
+      toast.error("Couldn't delete. It's back in your list.");
+    });
+  }, 5000);
+
+  toast("Item deleted", {
+    action: {
+      label: "Undo",
+      onClick: () => {
+        clearTimeout(timer);
+        restoreLocally(item.id);
+      },
+    },
+  });
+}
+```
+
+This works well for single-page sessions. Its weakness is that if the user closes the tab during those five seconds, the delete never happens. Sometimes that's fine. Often it isn't.
+
+## The more robust version: soft delete
+
+For anything that matters, do the undo on the server:
+
+1. "Delete" marks the record as deleted with a timestamp (`deletedAt`) instead of removing it.
+2. Every query filters out deleted records.
+3. "Undo" clears `deletedAt`.
+4. A scheduled job permanently removes records that have been deleted for more than some period, like 30 days.
+
+Now undo survives closed tabs, works across devices, and gives you a "Recently deleted" view almost for free.
+
+## When you still need confirmation
+
+Undo isn't possible everywhere. Keep a confirmation step when the action:
+
+- **Can't be reversed**, like sending money, publishing to the public, or emailing a customer.
+- **Affects other people**, like removing a team member or deleting a shared workspace.
+- **Is rare and huge**, like deleting an entire account.
+
+When you do confirm, make the dialog impossible to click through on autopilot. Name the specific thing ("Delete the *Q3 Report* workspace and its 48 documents?"). Label the button with the action ("Delete workspace," not "OK"). For the truly destructive cases, ask the user to type the name. That deliberate friction is the point.
+
+## The rule I use
+
+Use confirmation for actions that can't be undone, and undo for everything else. Your users will move faster and lose less, and they'll actually read the one dialog that matters.

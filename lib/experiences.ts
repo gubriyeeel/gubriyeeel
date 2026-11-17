@@ -13,7 +13,7 @@ export async function getExperiences() {
   return [
     {
       companyName: "Prosple",
-      position: "Frontend Engineer (Senior Individual Contributor)",
+      position: "Frontend Specialist Engineer",
       year: "2025-03-30",
       tech: ["React", "Next.js", "GraphQL", "TypeScript", "AWS", "Docker"],
     },

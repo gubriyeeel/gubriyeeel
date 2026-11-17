@@ -36,8 +36,7 @@ export default function ContactPage() {
   return (
     <main>
       <section className="mb-8 mt-12">
-        <p className="enter text-muted-foreground">Ping portal</p>
-        <h1 className="enter mt-1" style={{ "--i": 1 } as React.CSSProperties}>
+        <h1 className="enter" style={{ "--i": 1 } as React.CSSProperties}>
           Let&apos;s build something.
         </h1>
         <p

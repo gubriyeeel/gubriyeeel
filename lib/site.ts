@@ -6,7 +6,8 @@ const normalizedUrl = rawUrl.endsWith("/") ? rawUrl.slice(0, -1) : rawUrl;
 
 export const siteConfig = {
   name: "Gabriel Sufrir",
-  description: "Personal website of Gubriyeeel",
+  description:
+    "Gabriel Sufrir, frontend engineer. I build frontends for how people actually think.",
   url: normalizedUrl,
   links: {
     linkedin: "https://www.linkedin.com/in/gubriyeeel/",

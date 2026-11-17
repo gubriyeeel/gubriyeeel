@@ -16,10 +16,7 @@ export default async function Projects() {
   return (
     <main>
       <section className="mb-8 mt-12">
-        <p className="enter text-muted-foreground">
-          {projects.length} repositories
-        </p>
-        <h1 className="enter mt-1" style={{ "--i": 1 } as React.CSSProperties}>
+        <h1 className="enter" style={{ "--i": 1 } as React.CSSProperties}>
           Things I&apos;ve built.
         </h1>
       </section>

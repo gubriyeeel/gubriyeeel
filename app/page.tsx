@@ -14,7 +14,7 @@ import { siteConfig } from "@/lib/site";
 export const metadata: Metadata = {
   title: "Gubriyel | Software Engineer",
   description:
-    "Gabriel Sufrir is a senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
+    "Gabriel Sufrir is a frontend engineer at Prosple who builds interfaces around how people actually think, drawing on psychology and a full-stack background.",
   alternates: {
     canonical: "/",
   },
@@ -23,13 +23,13 @@ export const metadata: Metadata = {
     url: siteConfig.url,
     title: "Gabriel Sufrir | Frontend Engineer Portfolio",
     description:
-      "Senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
+      "Frontend engineer building interfaces around how people actually think.",
   },
   twitter: {
     card: "summary_large_image",
     title: "Gabriel Sufrir | Frontend Engineer Portfolio",
     description:
-      "Senior frontend engineer focused on Next.js, TypeScript, and product-focused web experiences.",
+      "Frontend engineer building interfaces around how people actually think.",
   },
 };
 
@@ -45,7 +45,7 @@ export default async function Home() {
     name: siteConfig.name,
     url: siteConfig.url,
     sameAs: [siteConfig.links.linkedin, siteConfig.links.github],
-    jobTitle: "Senior Frontend Engineer",
+    jobTitle: "Frontend Specialist Engineer",
   };
 
   const websiteJsonLd = {
@@ -68,17 +68,11 @@ export default async function Home() {
       />
 
       <section className="mb-8 mt-10">
-        <p
-          className="enter text-muted-foreground"
-          style={{ "--i": 1 } as React.CSSProperties}
-        >
-          Mabuhay
-        </p>
         <h1
-          className="enter mt-1"
+          className="enter"
           style={{ "--i": 1.5 } as React.CSSProperties}
         >
-          Hi, I'm Gab.
+          I build frontends for how people actually think.
         </h1>
         <p
           className="enter mt-4 max-w-prose leading-relaxed text-muted-foreground"
@@ -88,24 +82,23 @@ export default async function Home() {
             /gub-ri-yeel/ - no meaning, it's from my actual name
           </small>
           <br />
-          I'm a{" "}
-          <span className="text-foreground">senior frontend engineer</span>.
-          Beside coding, I enjoy{" "}
-          <span className="text-foreground">psychology</span> and trying out{" "}
-          <span className="text-foreground">new technologies</span>. I live in
-          the <span className="text-foreground">terminal</span> and I sometimes
-          attend <span className="text-foreground">tech events</span>.
+          I'm Gab, a{" "}
+          <span className="text-foreground">frontend engineer</span> at Prosple.
+          I came up through the full stack, so I know what sits behind the UI,
+          but I stay at the front because that's where the people are. I study{" "}
+          <span className="text-foreground">psychology</span> to understand why
+          someone hesitates, misclicks or gives up, then I build to{" "}
+          <span className="text-foreground">remove that moment</span>.
         </p>
       </section>
 
       <Reveal as="section" className="mt-6">
-        <SectionTitle eyebrow="Where I've been" title="Experience" />
+        <SectionTitle title="Experience" />
         <ExperienceList experiences={experiences} />
       </Reveal>
 
       <Reveal as="section" className="mt-16">
         <SectionTitle
-          eyebrow="Side quests"
           title="Projects"
           action={{ href: "/projects", label: "See all" }}
         />
@@ -118,7 +111,6 @@ export default async function Home() {
 
       <Reveal as="section" className="mt-16">
         <SectionTitle
-          eyebrow="Blabber logs"
           title="Writing"
           action={{ href: "/blogs", label: "All posts" }}
         />

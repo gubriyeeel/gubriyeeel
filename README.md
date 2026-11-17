@@ -1,10 +1,8 @@
-<div align="center">
+### I build frontends for how people actually think.
 
-![Typing SVG](https://readme-typing-svg.herokuapp.com?color=61DAFB&center=true&vCenter=true&height=45&width=600&lines=Hello,+I'm+Gab!+👋;Software+Engineer+@+Prosple;Frontend+Specialist+|+Full-Stack+Background;SaaS+Developer++at+Scale)
+I'm Gab, a **frontend engineer at Prosple**. I came up through the full stack (Django, Express, a stint leading a team), so I know what sits behind the UI. I stay at the front because that's where the people are.
 
-</div>
-
-I’m a **software engineer** specializing in high-performance frontend architectures. I focus on turning complex problems into user experiences for millions of users.
+I study **psychology** to understand why someone hesitates, misclicks or gives up, then I build to remove that moment.
 
 ---
 
@@ -38,7 +36,7 @@ I’m a **software engineer** specializing in high-performance frontend architec
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/git/git-original.svg" height="45" alt="git logo" />
   <img width="10" />
   <img src="https://cdn.jsdelivr.net/gh/devicons/devicon/icons/figma/figma-original.svg" height="45" alt="figma logo" />
-</
+</div>
 
 ---
 

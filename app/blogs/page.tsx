@@ -32,8 +32,7 @@ export default function BlogPage() {
   return (
     <main>
       <section className="mb-6 mt-12">
-        <p className="enter text-muted-foreground">Blabber logs</p>
-        <h1 className="enter mt-1" style={{ "--i": 1 } as React.CSSProperties}>
+        <h1 className="enter" style={{ "--i": 1 } as React.CSSProperties}>
           Notes from the terminal.
         </h1>
       </section>

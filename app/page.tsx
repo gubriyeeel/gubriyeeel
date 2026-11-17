@@ -5,8 +5,10 @@ import { posts } from "#site/content";
 import { sortPosts } from "@/lib/utils";
 import PostRow from "@/components/post-row";
 import { getExperiences } from "@/lib/experiences";
-import Experience from "@/components/experience";
-import { AnimatedText } from "@/components/animated-name";
+import { RouteCard } from "@/components/route-card";
+import { ExperiencePicker } from "@/components/experience-picker";
+import { StackRadar } from "@/components/stack-radar";
+import { CtaButton } from "@/components/cta-button";
 import { siteConfig } from "@/lib/site";
 
 export const metadata: Metadata = {
@@ -33,16 +35,19 @@ export const metadata: Metadata = {
 
 /* eslint-disable react/no-unescaped-entities */
 export default async function Home() {
-  const sortedPosts = sortPosts(posts);
+  const sortedPosts = sortPosts(posts.filter((post) => post.published));
   const projects = await getProjects();
   const experiences = await getExperiences();
+  const since = Math.min(
+    ...experiences.map((e) => new Date(e.year).getFullYear()),
+  );
 
   const personJsonLd = {
     "@context": "https://schema.org",
     "@type": "Person",
     name: siteConfig.name,
     url: siteConfig.url,
-    sameAs: [siteConfig.links.linkedin],
+    sameAs: [siteConfig.links.linkedin, siteConfig.links.github],
     jobTitle: "Senior Frontend Engineer",
   };
 
@@ -65,48 +70,70 @@ export default async function Home() {
         dangerouslySetInnerHTML={{ __html: JSON.stringify(websiteJsonLd) }}
       />
 
-      <p className="my-6 font-light leading-relaxed text-primary-foreground/80">
-        <small className="text-neutral-500">
-          /gub-ri-yeel/ - no meaning, it's from my actual name
-        </small>
-        <br />
-        Hi there, I'm <span className="font-medium">Gab</span>. I'm a senior
-        frontend engineer specialist. Beside coding, I enjoy{" "}
-        <span className="font-medium">psychology</span> and trying out{" "}
-        <span className="font-medium">new technologies</span>. I live in the{" "}
-        <span className="font-medium">terminal</span> and I sometimes attend{" "}
-        <span className="font-medium">tech events</span>.
-      </p>
-
-      <h2>
-        <AnimatedText name="Experiences" username="Employment Escapades" />
-      </h2>
-
-      <div className="flex flex-col gap-4">
-        {experiences.map((experience) => (
-          <Experience key={experience.companyName} experience={experience} />
-        ))}
-      </div>
-
-      <h2>
-        <AnimatedText name="Projects" username="Quests" />
-      </h2>
-
-      <div className="grid grid-cols-2 gap-4 md:grid-cols-3">
-        {projects.slice(0, 6).map((project) => (
-          <Project key={project.repo} project={project} />
-        ))}
-      </div>
-
-      <h2>
-        <AnimatedText name="Blogs" username="Blabber Logs" />
-      </h2>
+      <section className="mb-8 mt-12">
+        <p className="enter text-muted-foreground" style={{ "--i": 1 } as React.CSSProperties}>
+          Mabuhay
+        </p>
+        <h1 className="enter mt-1" style={{ "--i": 1.5 } as React.CSSProperties}>
+          Hi, I'm Gab.
+        </h1>
+        <p
+          className="enter mt-4 max-w-prose leading-relaxed text-muted-foreground"
+          style={{ "--i": 2 } as React.CSSProperties}
+        >
+          <small className="text-muted-foreground/60">
+            /gub-ri-yeel/ - no meaning, it's from my actual name
+          </small>
+          <br />
+          I'm a <span className="text-foreground">senior frontend engineer</span>.
+          Beside coding, I enjoy{" "}
+          <span className="text-foreground">psychology</span> and trying out{" "}
+          <span className="text-foreground">new technologies</span>. I live in
+          the <span className="text-foreground">terminal</span> and I sometimes
+          attend <span className="text-foreground">tech events</span>.
+        </p>
+      </section>
 
       <div className="flex flex-col gap-4">
-        {sortedPosts.map((post) => (
-          <PostRow key={post.slug} {...post} />
+        <RouteCard
+          from={{ code: "FIG", name: "Figma" }}
+          to={{ code: "PRD", name: "Production" }}
+          since={since}
+          roles={experiences.length}
+          projects={projects.length}
+        />
+        <ExperiencePicker experiences={experiences} />
+      </div>
+
+      <div className="mt-16">
+        <StackRadar experiences={experiences} />
+      </div>
+
+      <div className="mt-12 flex items-end justify-between">
+        <h2 className="m-0 text-3xl tracking-[-0.035em]">Projects</h2>
+        <a href="/projects" className="link-underline text-sm text-muted-foreground">
+          See all
+        </a>
+      </div>
+      <div className="mt-5 grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {projects.slice(0, 4).map((project, i) => (
+          <Project key={project.repo} project={project} index={i} />
         ))}
       </div>
+
+      <h2 className="mb-3 mt-14 text-3xl tracking-[-0.035em]">Writing</h2>
+      <div className="-mx-5 flex flex-col">
+        {sortedPosts.map((post, i) => (
+          <PostRow key={post.slug} {...post} index={i} />
+        ))}
+      </div>
+
+      <CtaButton
+        href="/contact"
+        label="Get in touch"
+        hint="open to work"
+        className="mt-14"
+      />
     </main>
   );
 }

@@ -3,34 +3,28 @@
 import Navbar from "@/components/navbar";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { ChevronLeftIcon } from "@radix-ui/react-icons";
 import { AnimatedText } from "@/components/animated-name";
 
 export default function Header() {
-  const pathname = usePathname() as string;
-
-  let href = "/";
-
-  if (pathname === "/blogs" || pathname === "/blogs/") {
-    href = "/";
-  } else if (pathname.startsWith("/blogs/")) {
-    href = "/blogs";
-  }
+  const pathname = usePathname() ?? "/";
+  const isHome = pathname === "/";
+  const backHref = pathname.startsWith("/blogs/") ? "/blogs" : "/";
 
   return (
-    <header className="flex h-[37.5px] items-center justify-between">
-      {pathname !== "/" && (
-        <div>
-          <Link
-            className="focus:outline-offset-6 underline decoration-neutral-600 underline-offset-4 transition-colors hover:decoration-neutral-500 focus:decoration-neutral-500"
-            href={href}
-          >
-            Back
-          </Link>
-        </div>
-      )}
-
-      {pathname === "/" && (
-        <AnimatedText name="Gabriel Sufrir" username="gubriyeeel" />
+    <header className="enter flex h-11 items-center justify-between gap-4">
+      {isHome ? (
+        <Link href="/" className="font-semibold tracking-tight">
+          <AnimatedText name="Gabriel Sufrir" username="gubriyeeel" />
+        </Link>
+      ) : (
+        <Link
+          href={backHref}
+          aria-label="Back"
+          className="pressable grid size-11 place-items-center rounded-full border border-white/[0.08] bg-card hover:bg-secondary"
+        >
+          <ChevronLeftIcon className="size-5" />
+        </Link>
       )}
 
       <Navbar />

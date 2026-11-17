@@ -10,6 +10,8 @@ export const siteConfig = {
   url: normalizedUrl,
   links: {
     linkedin: "https://www.linkedin.com/in/gubriyeeel/",
+    github: "https://github.com/gubriyeeel",
     email: "mailto:work.gabrielsufrir@gmail.com",
+    emailAddress: "work.gabrielsufrir@gmail.com",
   },
 };

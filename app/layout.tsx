@@ -1,14 +1,15 @@
 import type { Metadata } from "next";
-import { Poppins as fontSans } from "next/font/google";
+import { Inter } from "next/font/google";
 import { cn } from "@/lib/utils";
 import Header from "@/components/header";
 import { siteConfig } from "@/lib/site";
 
 import "./globals.css";
 
-const font = fontSans({
+const font = Inter({
   subsets: ["latin"],
-  weight: ["100", "200", "300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-sans",
+  display: "swap",
 });
 
 export const metadata: Metadata = {
@@ -55,9 +56,9 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
-    <html lang="en" suppressHydrationWarning>
-      <body className={cn("bg-primary text-secondary", font.className)}>
-        <div className="container mx-auto py-8">
+    <html lang="en" className={font.variable} suppressHydrationWarning>
+      <body className={cn("min-h-dvh bg-background font-sans text-foreground")}>
+        <div className="container mx-auto pb-16 pt-6">
           <Header />
           {children}
         </div>

@@ -90,17 +90,26 @@ export default async function PostPage({ params }: PostPageProps) {
   };
 
   return (
-    <article className="w-full py-6">
+    <article className="w-full pb-6 pt-12">
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(articleJsonLd) }}
       />
-      <h1>{post.title}</h1>
-      <div className="flex flex-col gap-4 text-neutral-300">
-        <time dateTime={post.date} className="text-sm text-neutral-500">
-          {formatDate(post.date)}
-        </time>
-        {post.description ? <p>{post.description}</p> : null}
+      <time dateTime={post.date} className="enter block text-sm text-muted-foreground">
+        {formatDate(post.date)}
+      </time>
+      <h1 className="enter mt-2 text-3xl sm:text-4xl" style={{ "--i": 1 } as React.CSSProperties}>
+        {post.title}
+      </h1>
+      {post.description ? (
+        <p className="enter mt-4 text-lg text-muted-foreground" style={{ "--i": 2 } as React.CSSProperties}>
+          {post.description}
+        </p>
+      ) : null}
+      <div
+        className="enter prose prose-invert mt-10 max-w-none prose-headings:tracking-tight prose-a:text-brand prose-pre:rounded-2xl prose-pre:border prose-pre:border-white/[0.06] prose-pre:bg-card"
+        style={{ "--i": 3 } as React.CSSProperties}
+      >
         <MDXContent code={post.body} />
       </div>
     </article>

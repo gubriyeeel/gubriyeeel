@@ -11,6 +11,11 @@ export type Project = z.infer<typeof projectSchema>;
 export async function getProjects() {
   return [
     {
+      repo: "kainly",
+      link: "https://github.com/gubriyeeel/kainly-web",
+      description: "A calorie tracking app for every Juan",
+    },
+    {
       repo: "detectify",
       link: "https://github.com/gubriyeeel/detectify",
       description: "Camera monitoring app for detecting objects",
@@ -22,17 +27,17 @@ export async function getProjects() {
     },
     {
       repo: "finance-app",
-      link: "https://github.com/gubriyeeel/finance-app",
+      link: "https://github.com/gubriyeeel/pwa-finance-app",
       description: "Finance app for tracking expenses and income",
     },
     {
       repo: "socket-next",
-      link: "https://github.com/gubriyeeel/ecommerce-client",
+      link: "https://github.com/gubriyeeel/socket-next",
       description: "Chat app with socket.io and next.js",
     },
     {
       repo: "dev-finder",
-      link: "https://github.com/gubriyeeel/socket-next",
+      link: "https://github.com/gubriyeeel/dev-finder",
       description: "Social network for finding developers",
     },
     {

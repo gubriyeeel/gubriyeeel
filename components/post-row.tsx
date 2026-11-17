@@ -1,5 +1,6 @@
 import { formatDate } from "@/lib/date";
 import Link from "next/link";
+import { ArrowRightIcon } from "@radix-ui/react-icons";
 
 type PostRowProps = {
   title: string;
@@ -7,6 +8,8 @@ type PostRowProps = {
   slug: string;
   slugAsParams?: string;
   description?: string;
+  index?: number;
+  showDescription?: boolean;
 };
 
 export default function PostRow({
@@ -14,19 +17,30 @@ export default function PostRow({
   date,
   slug,
   slugAsParams,
+  description,
+  index = 0,
+  showDescription = false,
 }: PostRowProps) {
   const normalizedSlug = slugAsParams ?? slug.replace(/^blogs\//, "");
-  const postHref = `/blogs/${normalizedSlug}`;
 
   return (
-    <article className="flex flex-row justify-between">
-      <Link href={postHref}>
-        <span className="font-medium lowercase underline decoration-neutral-500 underline-offset-4 transition-colors hover:decoration-neutral-400">
-          {title}
-        </span>
-      </Link>
-
-      <span className="text-sm text-neutral-500">{formatDate(date)}</span>
-    </article>
+    <Link
+      href={`/blogs/${normalizedSlug}`}
+      className="pressable enter group flex items-center gap-4 rounded-[1.5rem] px-5 py-4 hover:bg-card"
+      style={{ "--i": index } as React.CSSProperties}
+    >
+      <div className="min-w-0 flex-1">
+        <p className="font-medium tracking-tight">{title}</p>
+        {showDescription && description ? (
+          <p className="mt-1 line-clamp-2 text-sm text-muted-foreground">{description}</p>
+        ) : null}
+        <p className="mt-1 text-sm text-muted-foreground/70">
+          <time dateTime={date}>{formatDate(date)}</time>
+        </p>
+      </div>
+      <span className="grid size-10 shrink-0 place-items-center rounded-full bg-secondary/0 text-muted-foreground transition-all duration-500 ease-spring group-hover:bg-secondary group-hover:text-foreground">
+        <ArrowRightIcon className="size-4 transition-transform duration-500 ease-spring group-hover:translate-x-0.5" />
+      </span>
+    </Link>
   );
 }

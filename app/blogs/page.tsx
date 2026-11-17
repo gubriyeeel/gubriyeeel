@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { posts } from "#site/content";
-import { AnimatedText } from "@/components/animated-name";
-import PostItem from "@/components/post-item";
+import PostRow from "@/components/post-row";
 import { sortPosts } from "@/lib/utils";
 import { siteConfig } from "@/lib/site";
 
@@ -32,13 +31,16 @@ export default function BlogPage() {
 
   return (
     <main>
-      <h2>
-        <AnimatedText name="Blogs" username="Blabber Logs" />
-      </h2>
+      <section className="mb-6 mt-12">
+        <p className="enter text-muted-foreground">Blabber logs</p>
+        <h1 className="enter mt-1" style={{ "--i": 1 } as React.CSSProperties}>
+          Notes from the terminal.
+        </h1>
+      </section>
 
-      <div className="flex flex-col gap-12">
-        {sortedPosts.map((post) => (
-          <PostItem key={post.slug} {...post} />
+      <div className="-mx-5 flex flex-col gap-1">
+        {sortedPosts.map((post, i) => (
+          <PostRow key={post.slug} {...post} index={i + 2} showDescription />
         ))}
       </div>
     </main>

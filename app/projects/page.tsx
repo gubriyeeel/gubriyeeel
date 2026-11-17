@@ -1,22 +1,40 @@
-import { AnimatedText } from "@/components/animated-name";
+import type { Metadata } from "next";
 import Project from "@/components/project";
-
 import { getProjects } from "@/lib/projects";
+import { siteConfig } from "@/lib/site";
+import { CtaButton } from "@/components/cta-button";
+
+export const metadata: Metadata = {
+  title: "Projects",
+  description: "Side projects and experiments by Gabriel Sufrir.",
+  alternates: { canonical: "/projects" },
+};
 
 export default async function Projects() {
   const projects = await getProjects();
 
   return (
-    <div>
-      <h2>
-        <AnimatedText name="Projects" username="Quests" />
-      </h2>
+    <main>
+      <section className="mb-8 mt-12">
+        <p className="enter text-muted-foreground">{projects.length} repositories</p>
+        <h1 className="enter mt-1" style={{ "--i": 1 } as React.CSSProperties}>
+          Things I&apos;ve built.
+        </h1>
+      </section>
 
-      <div className="grid grid-cols-1 gap-4">
-        {projects.map((project) => (
-          <Project key={project.repo} project={project} />
+      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+        {projects.map((project, i) => (
+          <Project key={project.repo} project={project} index={i + 2} />
         ))}
       </div>
-    </div>
+
+      <CtaButton
+        href={siteConfig.links.github}
+        external
+        label="More on GitHub"
+        hint="@gubriyeeel"
+        className="mt-12"
+      />
+    </main>
   );
 }

@@ -1,8 +1,8 @@
-### I build frontends for how people actually think.
+### Gabriel Sufrir
 
-I'm Gab, a **frontend engineer at Prosple**. I came up through the full stack (Django, Express, a stint leading a team), so I know what sits behind the UI. I stay at the front because that's where the people are.
+Frontend engineer at **Prosple**, building products end to end on the side. I care most about the small moments where people hesitate: a button that shifts right before you tap it, a form that scolds you before you've finished typing, a screen that loads empty and leaves you wondering if it broke.
 
-I study **psychology** to understand why someone hesitates, misclicks or gives up, then I build to remove that moment.
+Lately I've been building **Kainly**, a calorie tracker that installs straight from the browser, and **Kasya**, a peso-first finance app for cash, bank and e-wallets. I also write about why people misclick and what to do about it.
 
 ---
 

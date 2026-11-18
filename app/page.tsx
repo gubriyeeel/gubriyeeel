@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import Link from "next/link";
 import { ProjectSlider } from "@/components/project-slider";
 import { getProjects } from "@/lib/projects";
 import { posts } from "#site/content";
@@ -72,24 +73,42 @@ export default async function Home() {
           className="enter"
           style={{ "--i": 1.5 } as React.CSSProperties}
         >
-          I build frontends for how people actually think.
+          Gabriel Sufrir
         </h1>
-        <p
-          className="enter mt-4 max-w-prose leading-relaxed text-muted-foreground"
+        <small
+          className="enter mt-2 block text-muted-foreground/60"
+          style={{ "--i": 1.75 } as React.CSSProperties}
+        >
+          /gub-ri-yeel/ - no meaning, it's from my actual name
+        </small>
+        <div
+          className="enter mt-5 flex max-w-prose flex-col gap-4 leading-relaxed text-muted-foreground"
           style={{ "--i": 2 } as React.CSSProperties}
         >
-          <small className="text-muted-foreground/60">
-            /gub-ri-yeel/ - no meaning, it's from my actual name
-          </small>
-          <br />
-          I'm Gab, a{" "}
-          <span className="text-foreground">frontend engineer</span> at Prosple.
-          I came up through the full stack, so I know what sits behind the UI,
-          but I stay at the front because that's where the people are. I study{" "}
-          <span className="text-foreground">psychology</span> to understand why
-          someone hesitates, misclicks or gives up, then I build to{" "}
-          <span className="text-foreground">remove that moment</span>.
-        </p>
+          <p>
+            Frontend engineer at{" "}
+            <span className="text-foreground">Prosple</span>, building products
+            end to end on the side. I care most about the small moments where
+            people hesitate: a button that shifts right before you tap it, a
+            form that scolds you before you&apos;ve finished typing, a screen
+            that loads empty and leaves you wondering if it broke.
+          </p>
+          <p>
+            Lately I&apos;ve been building{" "}
+            <Link href="/projects/kainly" className="text-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground">
+              Kainly
+            </Link>
+            , a calorie tracker that installs straight from the browser, and{" "}
+            <Link href="/projects/kasya" className="text-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground">
+              Kasya
+            </Link>
+            , a peso-first finance app for cash, bank and e-wallets. I also{" "}
+            <Link href="/blogs" className="text-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground">
+              write
+            </Link>{" "}
+            about why people misclick and what to do about it.
+          </p>
+        </div>
       </section>
 
       <Reveal as="section" className="mt-6">

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { ArrowLeftIcon, ArrowTopRightIcon } from "@radix-ui/react-icons";
 import { getProject, getProjects } from "@/lib/projects";
-import { StatusChip } from "@/components/project";
+import { ProjectCover, StatusChip } from "@/components/project";
 import { CtaButton } from "@/components/cta-button";
 
 type PageProps = { params: Promise<{ slug: string }> };
@@ -109,8 +109,14 @@ export default async function ProjectPage({ params }: PageProps) {
           {project.tagline}
         </p>
 
+        <ProjectCover
+          project={project}
+          priority
+          className="enter mt-8"
+        />
+
         <dl
-          className="surface enter mt-8 grid grid-cols-1 gap-4 p-5 sm:grid-cols-2"
+          className="surface enter mt-3 grid grid-cols-1 gap-4 p-5 sm:grid-cols-2"
           style={{ "--i": 2 } as React.CSSProperties}
         >
           <div>

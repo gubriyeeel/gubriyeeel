@@ -28,9 +28,15 @@ export default async function Projects() {
         </p>
       </section>
 
-      <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
+      <div className="flex flex-col gap-4">
         {projects.map((project, i) => (
-          <Project key={project.slug} project={project} index={i + 2} />
+          <Project
+            key={project.slug}
+            project={project}
+            index={i + 2}
+            priority={i === 0}
+            className="enter"
+          />
         ))}
       </div>
 

@@ -1,5 +1,5 @@
 import type { Metadata } from "next";
-import Project from "@/components/project";
+import { ProjectSlider } from "@/components/project-slider";
 import { getProjects } from "@/lib/projects";
 import { posts } from "#site/content";
 import { sortPosts } from "@/lib/utils";
@@ -102,11 +102,7 @@ export default async function Home() {
           title="Case studies"
           action={{ href: "/projects", label: "See all" }}
         />
-        <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
-          {projects.slice(0, 4).map((project) => (
-            <Project key={project.slug} project={project} />
-          ))}
-        </div>
+        <ProjectSlider projects={projects} />
       </Reveal>
 
       <Reveal as="section" className="mt-16">

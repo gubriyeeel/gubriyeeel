@@ -1,4 +1,4 @@
-export type ProjectStatus = "Live" | "Prototype" | "In development";
+export type ProjectStatus = "Live" | "Prototype" | "In development" | "Completed";
 
 export type Project = {
   slug: string;
@@ -10,6 +10,10 @@ export type Project = {
   status: ProjectStatus;
   role: string;
   url?: string;
+  /** Cover tint for the card and case study header. */
+  accent: string;
+  /** Screenshot under /public, shown in the cover when present. */
+  image?: string;
   stack: string[];
   problem: string;
   built: string[];
@@ -21,6 +25,7 @@ export type Project = {
 const projects: Project[] = [
   {
     slug: "kainly",
+    accent: "#34d399",
     name: "Kainly",
     tagline:
       "A calorie tracker for every Juan that installs from the browser and reminds you to log.",
@@ -29,6 +34,7 @@ const projects: Project[] = [
     status: "Live",
     role: "Product, design and engineering",
     url: "https://www.kainly.com",
+    image: "/projects/kainly.png",
     stack: ["Next.js 16", "React 19", "Better Auth", "Drizzle", "Neon Postgres", "Serwist", "Web Push"],
     problem:
       "Calorie tracking only works if people keep logging, and most people stop within days, usually because they forget. A native app adds another hurdle before day one: an app store listing, a download and an account, all before the first meal is logged.",
@@ -57,14 +63,14 @@ const projects: Project[] = [
   },
   {
     slug: "kasya",
+    accent: "#38bdf8",
     name: "Kasya",
     tagline:
       "Personal finance in pesos across cash, bank and e-wallets, with budgets, recurring bills and savings goals.",
     kind: "Consumer product",
     year: "2026",
-    status: "Live",
+    status: "In development",
     role: "Product, design and engineering",
-    url: "https://finance-app-rouge.vercel.app",
     stack: ["Next.js", "React 19", "Expo", "Better Auth", "Neon Postgres", "pnpm monorepo"],
     problem:
       "Money in the Philippines is spread across cash, bank accounts and e-wallets. Most trackers either assume one bank feed or start you on an empty screen with no idea what to do first. Both lead to the same thing: people stop logging.",
@@ -98,6 +104,7 @@ const projects: Project[] = [
   },
   {
     slug: "sinag-solar",
+    accent: "#fbbf24",
     name: "Sinag Solar",
     tagline:
       "A quotation website for Philippine solar installers that turns a homeowner's electricity bill into a qualified lead.",
@@ -137,6 +144,7 @@ const projects: Project[] = [
   },
   {
     slug: "gow",
+    accent: "#a78bfa",
     name: "gow",
     tagline:
       "A webhook delivery service that retries failed deliveries, rejects duplicate events, and shows every attempt live.",
@@ -173,6 +181,7 @@ const projects: Project[] = [
   },
   {
     slug: "claimy",
+    accent: "#fb7185",
     name: "Claimy",
     tagline:
       "A research assistant that only saves a quote if it appears word for word in the source.",
@@ -207,6 +216,7 @@ const projects: Project[] = [
   },
   {
     slug: "comment-insight",
+    accent: "#f87171",
     name: "Comment Insight",
     tagline:
       "Turns thousands of YouTube comments into requests, questions and themes a creator can act on.",
@@ -239,14 +249,14 @@ const projects: Project[] = [
   },
   {
     slug: "illustrify",
+    accent: "#f472b6",
     name: "Illustrify",
     tagline:
       "AI-generated picture books for teachers, built around the lesson they're teaching.",
     kind: "AI product · Capstone",
     year: "2025",
-    status: "Live",
+    status: "Completed",
     role: "Capstone team: engineering and release pipeline",
-    url: "https://www.illustrify.app",
     stack: ["Next.js", "TypeScript", "AI text and image generation", "Vercel", "GitHub Actions"],
     problem:
       "Teachers often make their own classroom materials on their own time. A picture book that fits a specific lesson, reading level and class usually doesn't exist, and making one by hand takes hours.",

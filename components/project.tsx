@@ -25,7 +25,7 @@ export function StatusChip({ status }: { status: ProjectStatus }) {
 
 /**
  * The visual half of a case study. A screenshot when there is one, otherwise
- * the decision that defined the project, set large on the project's tint.
+ * the project's name as a wordmark on its tint.
  */
 export function ProjectCover({
   project,
@@ -36,7 +36,7 @@ export function ProjectCover({
   priority?: boolean;
   className?: string;
 }) {
-  const { accent, image, name, decisions } = project;
+  const { accent, image, name } = project;
 
   return (
     <div
@@ -65,15 +65,13 @@ export function ProjectCover({
           className="absolute left-[8%] top-[12%] w-[92%] rounded-tl-xl border-l border-t border-white/10 shadow-[0_20px_60px_-15px_rgb(0_0_0/0.8)] transition-transform duration-700 ease-spring group-hover:-translate-y-1"
         />
       ) : (
-        <div className="absolute inset-0 flex flex-col justify-end p-6 sm:p-8">
+        <div className="absolute inset-0 grid place-items-center p-6">
           <p
-            className="text-xs font-medium uppercase tracking-[0.12em]"
+            aria-hidden
+            className="text-4xl font-semibold tracking-[-0.04em] opacity-90 transition-transform duration-700 ease-spring group-hover:scale-[1.03] sm:text-5xl"
             style={{ color: accent }}
           >
-            Key decision
-          </p>
-          <p className="mt-2 max-w-[18ch] text-3xl font-semibold leading-[1.05] tracking-[-0.03em] text-foreground sm:text-4xl">
-            {decisions[0]?.title}
+            {name}
           </p>
         </div>
       )}

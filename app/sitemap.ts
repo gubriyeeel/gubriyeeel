@@ -1,8 +1,9 @@
 import type { MetadataRoute } from "next";
 import { posts } from "#site/content";
 import { siteConfig } from "@/lib/site";
+import { getProjects } from "@/lib/projects";
 
-export default function sitemap(): MetadataRoute.Sitemap {
+export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
   const routes = ["", "/blogs", "/projects", "/contact"].map((route) => ({
     url: `${siteConfig.url}${route}`,
     lastModified: new Date(),
@@ -19,5 +20,12 @@ export default function sitemap(): MetadataRoute.Sitemap {
       priority: 0.6,
     }));
 
-  return [...routes, ...blogRoutes];
+  const projectRoutes = (await getProjects()).map((project) => ({
+    url: `${siteConfig.url}/projects/${project.slug}`,
+    lastModified: new Date(),
+    changeFrequency: "monthly" as const,
+    priority: 0.6,
+  }));
+
+  return [...routes, ...blogRoutes, ...projectRoutes];
 }

@@ -99,12 +99,12 @@ export default async function Home() {
 
       <Reveal as="section" className="mt-16">
         <SectionTitle
-          title="Projects"
+          title="Case studies"
           action={{ href: "/projects", label: "See all" }}
         />
         <div className="grid grid-cols-1 gap-3 sm:grid-cols-2">
           {projects.slice(0, 4).map((project) => (
-            <Project key={project.repo} project={project} />
+            <Project key={project.slug} project={project} />
           ))}
         </div>
       </Reveal>

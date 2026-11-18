@@ -68,20 +68,9 @@ export default async function Home() {
       />
 
       <section className="mb-8 mt-10">
-        <h1
-          className="enter"
-          style={{ "--i": 1.5 } as React.CSSProperties}
-        >
-          Gabriel Sufrir
-        </h1>
-        <small
-          className="enter mt-2 block text-muted-foreground/60"
-          style={{ "--i": 1.75 } as React.CSSProperties}
-        >
-          /gub-ri-yeel/ - no meaning, it's from my actual name
-        </small>
+        <h1 className="sr-only">Gabriel Sufrir</h1>
         <div
-          className="enter mt-5 flex max-w-prose flex-col gap-4 leading-relaxed text-muted-foreground"
+          className="enter flex max-w-prose flex-col gap-4 leading-relaxed text-muted-foreground"
           style={{ "--i": 2 } as React.CSSProperties}
         >
           <p>

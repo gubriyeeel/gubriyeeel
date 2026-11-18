@@ -33,7 +33,7 @@ export default function BlogPage() {
     <main>
       <section className="mb-6 mt-12">
         <h1 className="enter" style={{ "--i": 1 } as React.CSSProperties}>
-          Notes from the terminal.
+          Notes on building for people.
         </h1>
       </section>
 

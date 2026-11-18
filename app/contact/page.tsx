@@ -37,13 +37,14 @@ export default function ContactPage() {
     <main>
       <section className="mb-8 mt-12">
         <h1 className="enter" style={{ "--i": 1 } as React.CSSProperties}>
-          Let&apos;s build something.
+          Tell me where your users get stuck.
         </h1>
         <p
           className="enter mt-4 text-muted-foreground"
           style={{ "--i": 2 } as React.CSSProperties}
         >
-          Open to collaborations, product work, and frontend consulting.
+          Hiring for a frontend role, or have a product where people hesitate,
+          misclick or drop off? Send me the details.
         </p>
       </section>
 

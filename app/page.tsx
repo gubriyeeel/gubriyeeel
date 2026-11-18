@@ -1,5 +1,4 @@
 import type { Metadata } from "next";
-import Link from "next/link";
 import { ProjectSlider } from "@/components/project-slider";
 import { getProjects } from "@/lib/projects";
 import { posts } from "#site/content";
@@ -92,21 +91,6 @@ export default async function Home() {
             people hesitate: a button that shifts right before you tap it, a
             form that scolds you before you&apos;ve finished typing, a screen
             that loads empty and leaves you wondering if it broke.
-          </p>
-          <p>
-            Lately I&apos;ve been building{" "}
-            <Link href="/projects/kainly" className="text-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground">
-              Kainly
-            </Link>
-            , a calorie tracker that installs straight from the browser, and{" "}
-            <Link href="/projects/kasya" className="text-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground">
-              Kasya
-            </Link>
-            , a peso-first finance app for cash, bank and e-wallets. I also{" "}
-            <Link href="/blogs" className="text-foreground underline decoration-muted-foreground/40 underline-offset-4 transition-colors hover:decoration-foreground">
-              write
-            </Link>{" "}
-            about why people misclick and what to do about it.
           </p>
         </div>
       </section>

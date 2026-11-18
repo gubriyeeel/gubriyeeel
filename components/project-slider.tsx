@@ -38,8 +38,6 @@ export function ProjectSlider({ projects }: { projects: ProjectType[] }) {
     setActive(distances.indexOf(Math.min(...distances)));
   };
 
-  const pad = (n: number) => String(n).padStart(2, "0");
-
   return (
     <div
       role="region"
@@ -92,9 +90,6 @@ export function ProjectSlider({ projects }: { projects: ProjectType[] }) {
         </div>
 
         <div className="flex items-center gap-3">
-          <span className="text-sm tabular-nums text-muted-foreground">
-            {pad(active + 1)} / {pad(count)}
-          </span>
           <button
             type="button"
             aria-label="Previous case study"

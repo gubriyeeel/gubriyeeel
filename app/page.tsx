@@ -33,7 +33,6 @@ export const metadata: Metadata = {
   },
 };
 
-/* eslint-disable react/no-unescaped-entities */
 export default async function Home() {
   const sortedPosts = sortPosts(posts.filter((post) => post.published));
   const projects = await getProjects();
